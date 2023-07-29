@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  IconButton,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
@@ -18,6 +24,7 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import { useQuery } from "react-query";
 import { getUserMeData } from "../../api";
+import { AvatarIcon } from "../../assets";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -44,7 +51,18 @@ const Sidebar = () => {
   const { data, isLoading } = useQuery("userMeData", getUserMeData);
 
   if (isLoading) {
-    <>Ma'lumot endi kelmoqda</>;
+    return (
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        height={"80vh"}>
+        <CircularProgress
+          color="success"
+          style={{ width: "100px", height: "100px" }}
+        />
+      </Box>
+    );
   }
   return (
     <Box
@@ -98,7 +116,11 @@ const Sidebar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={`../../assets/user.png`}
+                  src={
+                    data?.objectKoinot?.photo === null
+                      ? AvatarIcon
+                      : data?.objectKoinot?.photo
+                  }
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>

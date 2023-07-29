@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, CircularProgress, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataInvoices } from "../../data/mockData";
@@ -14,7 +14,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button, TableHead } from "@mui/material";
 
-
 const Invoices = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -22,7 +21,20 @@ const Invoices = () => {
     "blogPostData",
     getBlogPostData
   );
-  console.log(data);
+  if (singleStatisticsLoading) {
+    return (
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        height={"80vh"}>
+        <CircularProgress
+          color="success"
+          style={{ width: "100px", height: "100px" }}
+        />
+      </Box>
+    );
+  }
   return (
     <Box m="20px">
       <Header title="INVOICES" subtitle="List of Invoice Balances" />
