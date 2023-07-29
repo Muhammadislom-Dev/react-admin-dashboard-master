@@ -16,6 +16,8 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import { useQuery } from "react-query";
+import { getUserMeData } from "../../api";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -39,7 +41,11 @@ const Sidebar = () => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+  const { data, isLoading } = useQuery("userMeData", getUserMeData);
 
+  if (isLoading) {
+    <>Ma'lumot endi kelmoqda</>;
+  }
   return (
     <Box
       sx={{
@@ -102,10 +108,10 @@ const Sidebar = () => {
                   color={colors.grey[100]}
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}>
-                  Ed Roh
+                  {data?.objectKoinot?.firstName}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  VP Fancy Admin
+                  {data?.objectKoinot?.lastName}
                 </Typography>
               </Box>
             </Box>

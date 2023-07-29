@@ -1,76 +1,27 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataTeam } from "../../data/mockData";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { Button, TableHead } from "@mui/material";
+import { useQuery } from "react-query";
+import { getTagData } from "../../api";
+import CreateModal from "./CreatModal";
 
 const Team = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const columns = [
-    { field: "id", headerName: "ID" },
-    {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
-      cellClassName: "name-column--cell",
-    },
-    {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "phone",
-      headerName: "Phone Number",
-      flex: 1,
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
-      field: "accessLevel",
-      headerName: "Access Level",
-      flex: 1,
-      renderCell: ({ row: { access } }) => {
-        return (
-          <Box
-            width="60%"
-            m="0 auto"
-            p="5px"
-            display="flex"
-            justifyContent="center"
-            backgroundColor={
-              access === "admin"
-                ? colors.greenAccent[600]
-                : access === "manager"
-                ? colors.greenAccent[700]
-                : colors.greenAccent[700]
-            }
-            borderRadius="4px"
-          >
-            {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
-            {access === "manager" && <SecurityOutlinedIcon />}
-            {access === "user" && <LockOpenOutlinedIcon />}
-            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-              {access}
-            </Typography>
-          </Box>
-        );
-      },
-    },
-  ];
-
+  const { data, isLoading: singleWorkerLoading } = useQuery(
+    "tagData",
+    getTagData
+  );
   return (
     <Box m="20px">
-      <Header title="TEAM" subtitle="Managing the Team Members" />
+      <Header title="TAG" subtitle="Tag Name" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -98,9 +49,49 @@ const Team = () => {
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
           },
-        }}
-      >
-        <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} />
+        }}>
+        <TableContainer component={Paper} variant="outlined">
+          <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+            <TableHead
+              style={{
+                backgroundColor: "rgb(220, 220, 220)",
+              }}>
+              <TableRow>
+                <TableCell>
+                  <b>
+                    <i>Tag Name</i>
+                  </b>
+                </TableCell>
+                <TableCell align="right">
+                  <CreateModal />
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data?.objectKoinot.content?.length > 0 &&
+                data?.objectKoinot.content.map((worker) => (
+                  <TableRow key={worker.id}>
+                    <TableCell>{worker.tag}</TableCell>
+                    <TableCell align="right">
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "flex-end",
+                        }}>
+                        <Button
+                          color="error"
+                          // onClick={handleDelete.bind(null, worker?.id)}
+                        >
+                          Delete
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Box>
     </Box>
   );
