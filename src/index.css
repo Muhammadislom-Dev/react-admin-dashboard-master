@@ -10,6 +10,14 @@ body,
   font-family: "Source Sans Pro", sans-serif;
 }
 
+.ck.ck-editor {
+  width: 600px;
+}
+
+.ck-editor__editable {
+  min-height: 400px;
+}
+
 .app {
   display: flex;
   position: relative;

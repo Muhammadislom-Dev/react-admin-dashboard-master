@@ -94,3 +94,5 @@ export const getBlogPostData = async () => {
   );
   return response.data;
 };
+
+
