@@ -1,6 +1,32 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-const API_BASE_URL = "http://64.227.105.70:1777/api"; // API ning manzili
+export const API_BASE_URL = "http://64.227.105.70:1777/api"; // API ning manzili
+const axiosInstance = axios;
+axiosInstance.defaults.baseURL = API_BASE_URL;
+
+axiosInstance.interceptors.request.use(
+  async (config) => {
+    if (!config.headers.Authorization) {
+      const token = localStorage.getItem("tekin_market_token");
+
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+export const API = {
+  fileUpload: (payload) =>
+    axiosInstance.post("/attachment/v1/upload-photo", payload, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }),
+  postBlog: (payload) => axiosInstance.post("/blog/v1", payload),
+};
 
 export const adminLoginData = async (formData) => {
   const response = await axios
