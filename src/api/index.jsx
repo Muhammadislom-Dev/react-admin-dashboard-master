@@ -25,6 +25,7 @@ export const API = {
       },
     }),
   postBlog: (payload) => axiosInstance.post("/blog/v1", payload),
+  postCategoryData: (payload) => axiosInstance.post("/category/v1", payload),
 };
 
 export const adminLoginData = async (formData) => {
@@ -43,18 +44,6 @@ export const adminLoginData = async (formData) => {
 export const postTagData = async (tag) => {
   const response = await axios
     .post(`${API_BASE_URL}/tags/v1/`, tag, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
-        "Content-Type": "application/json",
-      },
-    })
-    .then((res) => {});
-  return response.data;
-};
-
-export const postCategoryData = async (category) => {
-  const response = await axios
-    .post(`${API_BASE_URL}/category/v1`, category, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
         "Content-Type": "application/json",
