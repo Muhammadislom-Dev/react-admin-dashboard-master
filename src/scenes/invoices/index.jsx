@@ -17,17 +17,19 @@ import { Button, TableHead } from "@mui/material";
 const Invoices = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const { data, isLoading: singleStatisticsLoading } = useQuery(
-    "blogPostData",
-    getBlogPostData
-  );
+  const {
+    data,
+    isLoading: singleStatisticsLoading,
+    refetch,
+  } = useQuery("blogPostData", getBlogPostData);
   if (singleStatisticsLoading) {
     return (
       <Box
         display="flex"
         alignItems="center"
         justifyContent="center"
-        height={"80vh"}>
+        height={"80vh"}
+      >
         <CircularProgress
           color="success"
           style={{ width: "100px", height: "100px" }}
@@ -65,13 +67,15 @@ const Invoices = () => {
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
           },
-        }}>
+        }}
+      >
         <TableContainer component={Paper} variant="outlined">
           <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
             <TableHead
               style={{
                 backgroundColor: "rgb(220, 220, 220)",
-              }}>
+              }}
+            >
               <TableRow>
                 <TableCell>
                   <b>
@@ -84,7 +88,7 @@ const Invoices = () => {
                   </b>
                 </TableCell>
                 <TableCell align="right">
-                  <CreateModal />
+                  <CreateModal refetch={refetch} />
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -108,7 +112,8 @@ const Invoices = () => {
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "flex-end",
-                          }}>
+                          }}
+                        >
                           {/* <EditModal id={company.id} /> */}
                           <Button
                             color="error"
