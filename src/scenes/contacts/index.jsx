@@ -9,17 +9,31 @@ import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button, TableHead } from "@mui/material";
-import { useQuery } from "react-query";
-import { getCategoryData } from "../../api";
+import { useMutation, useQuery } from "react-query";
+import { deteleCategoryData, getCategoryData } from "../../api";
 import CreateModal from "./CreatModal";
+import DeleteModal from "../../components/DeleteModal";
+import { toast } from "react-toastify";
 
 const Contacts = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const { data, isLoading: singleCompanyLoading } = useQuery(
+  const { data, isLoading: singleCompanyLoading,refetch } = useQuery(
     "categoryData",
     getCategoryData
   );
+
+  const { mutate } = useMutation(async (userId) => {
+    return await deteleCategoryData(userId)
+      .then((res) => {
+        toast.success("Malumotlar yangilandi!");
+        refetch();
+      })
+      .catch((err) => {
+        console.log("Mutation error", err);
+        console.log("Xatolik yuzberdi delete qilishda!");
+      });
+  });
 
   return (
     <Box m="20px">
@@ -75,7 +89,7 @@ const Contacts = () => {
                   </b>
                 </TableCell>
                 <TableCell align="right">
-                  <CreateModal />
+                  <CreateModal refetch={refetch} />
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -92,12 +106,7 @@ const Contacts = () => {
                           alignItems: "center",
                           justifyContent: "flex-end",
                         }}>
-                        <Button
-                          color="error"
-                          // onClick={handleDelete.bind(null, worker?.id)}
-                        >
-                          Delete
-                        </Button>
+                         <DeleteModal mutate={mutate} data={worker?.id} />
                       </div>
                     </TableCell>
                   </TableRow>

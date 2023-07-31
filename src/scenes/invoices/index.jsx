@@ -5,7 +5,7 @@ import { mockDataInvoices } from "../../data/mockData";
 import Header from "../../components/Header";
 import CreateModal from "./CreatModal";
 import { getBlogPostData } from "../../api";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -13,23 +13,38 @@ import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button, TableHead } from "@mui/material";
+import { useMemo, useState } from "react";
+import { PAGE_SIZE } from "../team";
+import Pagination from "../../components/Pagination";
+import DeleteModal from "../../components/DeleteModal";
 
 const Invoices = () => {
   const theme = useTheme();
+  const [memberPage, setMemberPage] = useState(1);
   const colors = tokens(theme.palette.mode);
   const {
     data,
     isLoading: singleStatisticsLoading,
     refetch,
   } = useQuery("blogPostData", getBlogPostData);
+
+
+
+  const memberTableData = useMemo(() => {
+    const firstPageIndex = (memberPage - 1) * PAGE_SIZE;
+    const lastPageIndex = firstPageIndex + PAGE_SIZE;
+    return (
+      !!data?.objectKoinot.content &&
+      data?.objectKoinot.content?.slice(firstPageIndex, lastPageIndex)
+    );
+  }, [memberPage, data?.objectKoinot.content]);
   if (singleStatisticsLoading) {
     return (
       <Box
         display="flex"
         alignItems="center"
         justifyContent="center"
-        height={"80vh"}
-      >
+        height={"80vh"}>
         <CircularProgress
           color="success"
           style={{ width: "100px", height: "100px" }}
@@ -37,6 +52,7 @@ const Invoices = () => {
       </Box>
     );
   }
+
   return (
     <Box m="20px">
       <Header title="INVOICES" subtitle="List of Invoice Balances" />
@@ -67,15 +83,13 @@ const Invoices = () => {
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
           },
-        }}
-      >
+        }}>
         <TableContainer component={Paper} variant="outlined">
           <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
             <TableHead
               style={{
                 backgroundColor: "rgb(220, 220, 220)",
-              }}
-            >
+              }}>
               <TableRow>
                 <TableCell>
                   <b>
@@ -93,8 +107,8 @@ const Invoices = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data?.objectKoinot?.content?.length > 0 &&
-                data?.objectKoinot?.content?.map((company) => (
+              {memberTableData?.length > 0 &&
+                memberTableData?.map((company) => (
                   <>
                     <TableRow key={company.id}>
                       <img
@@ -112,15 +126,9 @@ const Invoices = () => {
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "flex-end",
-                          }}
-                        >
+                          }}>
                           {/* <EditModal id={company.id} /> */}
-                          <Button
-                            color="error"
-                            // onClick={handleDelete.bind(null, company.id)}
-                          >
-                            Delete
-                          </Button>
+                          {/* <DeleteModal mutate={mutate} data={worker?.id} /> */}
                         </div>
                       </TableCell>
                     </TableRow>
@@ -128,6 +136,15 @@ const Invoices = () => {
                 ))}
             </TableBody>
           </Table>
+          <Pagination
+            className="pagination-bar"
+            currentPage={memberPage}
+            totalCount={
+              !!data?.objectKoinot.content && data?.objectKoinot.content?.length
+            }
+            pageSize={PAGE_SIZE}
+            onPageChange={(page) => setMemberPage(page)}
+          />
         </TableContainer>
       </Box>
     </Box>

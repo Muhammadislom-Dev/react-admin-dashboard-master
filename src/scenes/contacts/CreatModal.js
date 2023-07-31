@@ -6,22 +6,57 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { TextField } from "@mui/material";
-import { postTagData } from "../../api";
+import { API, postTagData } from "../../api";
 import { useMutation } from "react-query";
+import { toast } from "react-toastify";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function CreateModal() {
+export default function CreateModal({ refetch }) {
   const [open, setOpen] = React.useState(false);
+  const [image, setImage] = React.useState("");
   const [formData, setFormData] = React.useState({
-    tag: "",
+    nameRu: "",
+    nameUz: "",
+    photoId: "",
+    icon: "string",
   });
-  const mutation = useMutation((tag) => postTagData(tag));
   const handleClickOpen = () => {
     setOpen(true);
   };
+
+  const { mutate } = useMutation(async (payload) => {
+    return await API.fileUpload(payload)
+      .then((res) => {
+        setFormData((prev) => ({
+          ...prev,
+          photoId: res.data.objectKoinot[0].id,
+        }));
+        toast.success("Rasim muvofaqiyatli yuklandi");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.danger("Rasim yuklanmadi qaytadan urinib ko'ring");
+      });
+  });
+
+  const { mutate: postCategoryMutate, isLoading } = useMutation(
+    async (payload) => {
+      return await API.postCategoryData(payload)
+        .then((res) => {
+          console.log(res.data);
+          toast.success("Category muvafaqiyatli yaratildi");
+          refetch();
+          handleClose();
+        })
+        .catch((err) => {
+          console.log(err);
+          toast.danger("Categorys yaratilmadi qaytadan urinib ko'ring");
+        });
+    }
+  );
 
   const handleClose = () => {
     setOpen(false);
@@ -34,9 +69,10 @@ export default function CreateModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    mutation.mutate(formData);
-    handleClose();
+    postCategoryMutate({ ...formData, parentCategory: null });
   };
+
+  console.log(formData);
 
   return (
     <div>
@@ -49,16 +85,50 @@ export default function CreateModal() {
         keepMounted
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description">
-        <DialogTitle>{"Tag Name"}</DialogTitle>
+        <DialogTitle>{"Category Name"}</DialogTitle>
         <form onSubmit={handleSubmit}>
           <DialogContent>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "10px",
+                justifyContent: "space-between",
+              }}>
+              <input
+                id="image-input"
+                className="form-control"
+                style={{
+                  width: "250px",
+                  marginRight: "20px",
+                  fontSize: "1rem",
+                }}
+                name="images"
+                type="file"
+                required
+                onChange={(e) => {
+                  setImage(e.target.files[0]);
+                  mutate({ key: e.target.files[0] });
+                }}
+              />
+            </div>
             <div>
               <TextField
                 sx={{ width: 550, marginBottom: "10px" }}
-                label="Tag Name"
-                name="tag"
+                label="Name Uz"
+                name="nameUz"
                 required
-                value={formData.phoneNumber}
+                value={formData.nameUz}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <TextField
+                sx={{ width: 550, marginBottom: "10px" }}
+                label="Name Ru"
+                name="nameRu"
+                required
+                value={formData.nameRu}
                 onChange={handleChange}
               />
             </div>

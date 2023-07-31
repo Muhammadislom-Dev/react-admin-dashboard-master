@@ -12,7 +12,6 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { TextField } from "@mui/material";
 import { MultipleSelect } from "../../components";
-import { usePhotoUpload } from "../../hooks/usePhotoUpload";
 import { toast } from "react-toastify";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -21,7 +20,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function CreateModal({ refetch }) {
   const [open, setOpen] = React.useState(false);
-  const [editorState, setEditorState] = React.useState();
   const [image, setImage] = React.useState("");
   const [formData, setFormData] = React.useState({
     name: "",
@@ -60,8 +58,6 @@ export default function CreateModal({ refetch }) {
       });
   });
 
-  // const { mutate } = usePhotoUpload({ setData: setFormData });
-  const mutation = useMutation((tag) => postTagData(tag));
   const { data, isLoading: singleWorkerLoading } = useQuery(
     "tagData",
     getTagData
@@ -84,7 +80,6 @@ export default function CreateModal({ refetch }) {
     postBlogMutate({ ...formData, language: "UZ" });
   };
 
-  console.log(isLoading);
   return (
     <div>
       <Button variant="contained" color="primary" onClick={handleClickOpen}>
@@ -95,8 +90,7 @@ export default function CreateModal({ refetch }) {
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-      >
+        aria-describedby="alert-dialog-slide-description">
         <DialogTitle>{"Blog Name"}</DialogTitle>
         <form onSubmit={handleSubmit}>
           <DialogContent>
@@ -106,8 +100,7 @@ export default function CreateModal({ refetch }) {
                 alignItems: "center",
                 marginBottom: "10px",
                 justifyContent: "space-between",
-              }}
-            >
+              }}>
               <input
                 id="image-input"
                 className="form-control"
@@ -131,7 +124,7 @@ export default function CreateModal({ refetch }) {
             <div>
               <TextField
                 sx={{ width: 550, marginBottom: "10px" }}
-                label="Blog Nmae"
+                label="Blog Name"
                 name="name"
                 required
                 value={formData.name}
@@ -154,27 +147,12 @@ export default function CreateModal({ refetch }) {
                 alignItems: "center",
                 marginBottom: "10px",
                 justifyContent: "space-between",
-              }}
-            >
+              }}>
               <MultipleSelect
                 data={data?.objectKoinot.content}
                 setFormData={setFormData}
                 singleWorkerLoading={singleWorkerLoading}
               />
-              {/* {!singleWorkerLoading &&
-                data?.objectKoinot.content && 
-                data?.objectKoinot.content?.map((option) => )}
-              <select
-                placeholder="Company"
-                className="form-select"
-                required
-                name="category_id"
-                defaultValue={""}
-              >
-                <option value="" disabled>
-                  Select Tag
-                </option>
-              </select> */}
             </div>
           </DialogContent>
           <DialogActions>

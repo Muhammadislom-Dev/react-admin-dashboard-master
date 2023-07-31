@@ -1,5 +1,4 @@
 import axios from "axios";
-import { toast } from "react-toastify";
 export const API_BASE_URL = "http://64.227.105.70:1777/api"; // API ning manzili
 const axiosInstance = axios;
 axiosInstance.defaults.baseURL = API_BASE_URL;
@@ -44,6 +43,18 @@ export const adminLoginData = async (formData) => {
 export const postTagData = async (tag) => {
   const response = await axios
     .post(`${API_BASE_URL}/tags/v1/`, tag, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => {});
+  return response.data;
+};
+
+export const postCategoryData = async (category) => {
+  const response = await axios
+    .post(`${API_BASE_URL}/category/v1`, category, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
         "Content-Type": "application/json",
@@ -112,7 +123,7 @@ export const deteleCategoryData = async (id) => {
 
 export const getBlogPostData = async () => {
   const response = await axios.get(
-    `${API_BASE_URL}/blog/v1?page=0&size=5&sortBy=id`,
+    `${API_BASE_URL}/blog/v1?page=0&size=100&sortBy=id`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
