@@ -69,10 +69,11 @@ export default function CreateModal({ refetch }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(formData);
     postCategoryMutate({ ...formData, parentCategory: null });
   };
 
-  console.log(formData);
+  // console.log(formData);
 
   return (
     <div>
@@ -84,7 +85,8 @@ export default function CreateModal({ refetch }) {
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description">
+        aria-describedby="alert-dialog-slide-description"
+      >
         <DialogTitle>{"Category Name"}</DialogTitle>
         <form onSubmit={handleSubmit}>
           <DialogContent>
@@ -94,7 +96,8 @@ export default function CreateModal({ refetch }) {
                 alignItems: "center",
                 marginBottom: "10px",
                 justifyContent: "space-between",
-              }}>
+              }}
+            >
               <input
                 id="image-input"
                 className="form-control"
@@ -135,7 +138,9 @@ export default function CreateModal({ refetch }) {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">Add</Button>
+            <Button type="submit">
+              {isLoading ? "Yuklanmoqda..." : "Add"}
+            </Button>
           </DialogActions>
         </form>
       </Dialog>
