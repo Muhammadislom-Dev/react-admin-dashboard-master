@@ -16,6 +16,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
 import Login from "./components/Login";
+import Users from "./scenes/users/Users";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -38,6 +39,7 @@ function App() {
                 <Route path="/invoices" element={<Invoices />} />
                 <Route path="/form" element={<Form />} />
                 <Route path="/bar" element={<Bar />} />
+                <Route path="/users" element={<Users />} />
                 {/* <Route path="/pie" element={<Pie />} />
                 <Route path="/line" element={<Line />} />
                 <Route path="/faq" element={<FAQ />} />

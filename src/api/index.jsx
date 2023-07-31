@@ -18,6 +18,7 @@ axiosInstance.interceptors.request.use(
 );
 
 export const API = {
+  //POST REQUEST
   fileUpload: (payload) =>
     axiosInstance.post("/attachment/v1/upload-photo", payload, {
       headers: {
@@ -26,6 +27,11 @@ export const API = {
     }),
   postBlog: (payload) => axiosInstance.post("/blog/v1", payload),
   postCategoryData: (payload) => axiosInstance.post("/category/v1", payload),
+  postUserData: (payload) => axiosInstance.post("/user/v1/register", payload),
+
+  //GET REQUEST
+  getUserData: (payload) =>
+    axiosInstance.get("/user/v1?page=0&size=100&sortBy=id", payload),
 };
 
 export const adminLoginData = async (formData) => {

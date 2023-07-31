@@ -19,7 +19,7 @@ const MenuProps = {
   },
 };
 
-const MultipleSelect = ({ data, setFormData, singleWorkerLoading }) => {
+const MultipleSelect = ({ data, setFormData, objKey }) => {
   const [tags, setTags] = useState([]);
 
   const handleChange = (event, option) => {
@@ -42,7 +42,7 @@ const MultipleSelect = ({ data, setFormData, singleWorkerLoading }) => {
   };
 
   useEffect(() => {
-    setFormData((prev) => ({ ...prev, tagsId: tags.map((el) => el.id) }));
+    setFormData((prev) => ({ ...prev, [objKey]: tags.map((el) => el.id) }));
   }, [tags]);
 
   return (

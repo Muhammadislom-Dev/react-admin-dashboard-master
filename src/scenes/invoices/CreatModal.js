@@ -90,7 +90,8 @@ export default function CreateModal({ refetch }) {
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description">
+        aria-describedby="alert-dialog-slide-description"
+      >
         <DialogTitle>{"Blog Name"}</DialogTitle>
         <form onSubmit={handleSubmit}>
           <DialogContent>
@@ -100,7 +101,8 @@ export default function CreateModal({ refetch }) {
                 alignItems: "center",
                 marginBottom: "10px",
                 justifyContent: "space-between",
-              }}>
+              }}
+            >
               <input
                 id="image-input"
                 className="form-control"
@@ -147,10 +149,12 @@ export default function CreateModal({ refetch }) {
                 alignItems: "center",
                 marginBottom: "10px",
                 justifyContent: "space-between",
-              }}>
+              }}
+            >
               <MultipleSelect
                 data={data?.objectKoinot.content}
                 setFormData={setFormData}
+                objKey="tagsId"
                 singleWorkerLoading={singleWorkerLoading}
               />
             </div>
