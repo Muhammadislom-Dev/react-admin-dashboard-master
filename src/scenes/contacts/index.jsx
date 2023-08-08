@@ -18,16 +18,19 @@ import { toast } from "react-toastify";
 const Contacts = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const { data, isLoading: singleCompanyLoading,refetch } = useQuery(
-    "categoryData",
-    getCategoryData
-  );
+  const {
+    data,
+    isLoading: singleCompanyLoading,
+    refetch,
+  } = useQuery("categoryData", getCategoryData);
 
   const { mutate } = useMutation(async (userId) => {
     return await deteleCategoryData(userId)
       .then((res) => {
-        toast.success("Malumotlar yangilandi!");
+        toast.success("Malumot muvaffaqiyatli o'chirildi!");
+        toast.success("Ma'lumotlar yangilandi!");
         refetch();
+        window.location.reload();
       })
       .catch((err) => {
         console.log("Mutation error", err);
@@ -37,9 +40,7 @@ const Contacts = () => {
 
   return (
     <Box m="20px">
-      <Header
-        title="Kategoriyalar"
-      />
+      <Header title="Kategoriyalar" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -106,7 +107,7 @@ const Contacts = () => {
                           alignItems: "center",
                           justifyContent: "flex-end",
                         }}>
-                         <DeleteModal mutate={mutate} data={worker?.id} />
+                        <DeleteModal mutate={mutate} data={worker?.id} />
                       </div>
                     </TableCell>
                   </TableRow>
