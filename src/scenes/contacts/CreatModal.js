@@ -17,11 +17,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function CreateModal({ refetch }) {
   const [open, setOpen] = React.useState(false);
   const [image, setImage] = React.useState("");
+  const [selectedFile, setSelectedFile] = React.useState(null);
   const [formData, setFormData] = React.useState({
     nameRu: "",
     nameUz: "",
     photoId: "",
-    icon: "string",
+    icon: selectedFile,
   });
   const handleClickOpen = () => {
     setOpen(true);
@@ -73,7 +74,9 @@ export default function CreateModal({ refetch }) {
     postCategoryMutate({ ...formData, parentCategory: null });
   };
 
-  // console.log(formData);
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
 
   return (
     <div>
@@ -85,8 +88,7 @@ export default function CreateModal({ refetch }) {
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-      >
+        aria-describedby="alert-dialog-slide-description">
         <DialogTitle>{"Category Name"}</DialogTitle>
         <form onSubmit={handleSubmit}>
           <DialogContent>
@@ -96,24 +98,31 @@ export default function CreateModal({ refetch }) {
                 alignItems: "center",
                 marginBottom: "10px",
                 justifyContent: "space-between",
-              }}
-            >
-              <input
-                id="image-input"
-                className="form-control"
-                style={{
-                  width: "250px",
-                  marginRight: "20px",
-                  fontSize: "1rem",
-                }}
-                name="images"
-                type="file"
-                required
-                onChange={(e) => {
-                  setImage(e.target.files[0]);
-                  mutate({ key: e.target.files[0] });
-                }}
-              />
+              }}>
+              <label>
+                Category Icon
+                <input type="file" accept=".svg" onChange={handleFileChange} />
+              </label>
+
+              <label>
+                Category Image
+                <input
+                  id="image-input"
+                  className="form-control"
+                  style={{
+                    width: "250px",
+                    marginRight: "20px",
+                    fontSize: "1rem",
+                  }}
+                  name="images"
+                  type="file"
+                  required
+                  onChange={(e) => {
+                    setImage(e.target.files[0]);
+                    mutate({ key: e.target.files[0] });
+                  }}
+                />
+              </label>
             </div>
             <div>
               <TextField
