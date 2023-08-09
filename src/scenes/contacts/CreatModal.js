@@ -22,7 +22,6 @@ export default function CreateModal({ refetch }) {
     nameRu: "",
     nameUz: "",
     photoId: "",
-    icon: selectedFile,
   });
   const handleClickOpen = () => {
     setOpen(true);
@@ -99,11 +98,6 @@ export default function CreateModal({ refetch }) {
                 marginBottom: "10px",
                 justifyContent: "space-between",
               }}>
-              <label>
-                Category Icon
-                <input type="file" accept=".svg" onChange={handleFileChange} />
-              </label>
-
               <label>
                 Category Image
                 <input

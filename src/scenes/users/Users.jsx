@@ -21,6 +21,7 @@ import { tokens } from "../../theme";
 import { useQuery } from "react-query";
 import { API, getBlogPostData } from "../../api";
 import { PAGE_SIZE } from "../team";
+import UserEditModal from "./UserEditModal";
 
 const Users = () => {
   const theme = useTheme();
@@ -160,7 +161,7 @@ const Users = () => {
                             justifyContent: "flex-end",
                           }}
                         >
-                          {/* <EditModal id={company.id} /> */}
+                          {/* <UserEditModal id={company.id} /> */}
                           {/* <DeleteModal mutate={mutate} data={worker?.id} /> */}
                         </div>
                       </TableCell>

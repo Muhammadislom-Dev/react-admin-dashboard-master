@@ -17,6 +17,7 @@ import { useMemo, useState } from "react";
 import { PAGE_SIZE } from "../team";
 import Pagination from "../../components/Pagination";
 import DeleteModal from "../../components/DeleteModal";
+import EditModal from "./EditModal";
 
 const Invoices = () => {
   const theme = useTheme();
@@ -27,8 +28,6 @@ const Invoices = () => {
     isLoading: singleStatisticsLoading,
     refetch,
   } = useQuery("blogPostData", getBlogPostData);
-
-
 
   const memberTableData = useMemo(() => {
     const firstPageIndex = (memberPage - 1) * PAGE_SIZE;
@@ -127,7 +126,7 @@ const Invoices = () => {
                             alignItems: "center",
                             justifyContent: "flex-end",
                           }}>
-                          {/* <EditModal id={company.id} /> */}
+                          <EditModal id={company.id} refetch={refetch} />
                           {/* <DeleteModal mutate={mutate} data={worker?.id} /> */}
                         </div>
                       </TableCell>

@@ -22,7 +22,6 @@ export default function EditModal({ data }) {
     nameRu: "",
     nameUz: "",
     photoId: "",
-    icon: selectedFile,
     id: data,
   });
   const handleClickOpen = () => {
@@ -99,11 +98,6 @@ export default function EditModal({ data }) {
                 marginBottom: "10px",
                 justifyContent: "space-between",
               }}>
-              <label>
-                Category Icon
-                <input type="file" accept=".svg" onChange={handleFileChange} />
-              </label>
-
               <label>
                 Category Image
                 <input
