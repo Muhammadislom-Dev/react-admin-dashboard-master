@@ -14,6 +14,7 @@ import { deteleCategoryData, getCategoryData } from "../../api";
 import CreateModal from "./CreatModal";
 import DeleteModal from "../../components/DeleteModal";
 import { toast } from "react-toastify";
+import EditModal from "./EditModal";
 
 const Contacts = () => {
   const theme = useTheme();
@@ -108,6 +109,7 @@ const Contacts = () => {
                           justifyContent: "flex-end",
                         }}>
                         <DeleteModal mutate={mutate} data={worker?.id} />
+                        <EditModal data={worker.id} />
                       </div>
                     </TableCell>
                   </TableRow>
