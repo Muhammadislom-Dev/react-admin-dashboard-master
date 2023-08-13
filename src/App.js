@@ -11,6 +11,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Login from "./components/Login";
 import Users from "./scenes/users/Users";
+import SubCategory from "./scenes/subcategory";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -32,6 +33,7 @@ function App() {
                 <Route path="/contacts" element={<Contacts />} />
                 <Route path="/invoices" element={<Invoices />} />
                 <Route path="/users" element={<Users />} />
+                <Route path="/category" element={<SubCategory />} />
               </Routes>
             </main>
           </div>

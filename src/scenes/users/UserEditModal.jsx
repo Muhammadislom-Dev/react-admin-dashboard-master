@@ -25,12 +25,20 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 const roles = [
   { id: "ROLE_ADMIN", tag: "admin" },
   { id: "ROLE_USER", tag: "user" },
+  {
+    id: "ROLE_MODERATOR",
+    tag: "moderator",
+  },
+  {
+    id: "ROLE_SUPPER_ADMIN",
+    tag: "super_admin",
+  },
 ];
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-const UserEditModal = ({ refetch }) => {
+const UserEditModal = ({ refetch, id }) => {
   const [showPassword, setShowPassword] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [image, setImage] = React.useState("");
@@ -40,8 +48,8 @@ const UserEditModal = ({ refetch }) => {
     password: true,
     phoneNumber: "",
     photoId: 0,
-    id: "",
-    roles: ["ROLE_ADMIN"],
+    id: id,
+    roles: ["ROLE_ADMIN,ROLE_USER,ROLE_SUPPER_ADMIN", "ROLE_MODERATOR"],
   });
 
   const { mutate } = useMutation((payload) =>

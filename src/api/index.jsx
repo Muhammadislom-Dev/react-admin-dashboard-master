@@ -32,6 +32,7 @@ export const API = {
   //GET REQUEST
   getUserData: (payload) =>
     axiosInstance.get("/user/v1?page=0&size=100&sortBy=id", payload),
+  // getStaticsData: (payload) => axiosInstance.get("/adminVariables/v1", payload),
 };
 
 export const adminLoginData = async (formData) => {
@@ -77,6 +78,15 @@ export const getTagData = async () => {
   return response.data;
 };
 
+export const getStaticsData = async () => {
+  const response = await axios.get(`${API_BASE_URL}/statistics/v1/overall`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
+    },
+  });
+  return response.data;
+};
+
 export const deteleTagData = async (id) => {
   const response = await axios.delete(`${API_BASE_URL}/tags/v1/${id}`, {
     headers: {
@@ -109,6 +119,15 @@ export const getCategoryData = async () => {
 
 export const deteleCategoryData = async (id) => {
   const response = await axios.delete(`${API_BASE_URL}/category/v1/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
+    },
+  });
+  return response.data;
+};
+
+export const deteleBlogData = async (id) => {
+  const response = await axios.delete(`${API_BASE_URL}/blog/v1/${id}`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
     },

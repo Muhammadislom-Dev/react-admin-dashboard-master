@@ -11,12 +11,13 @@ import Paper from "@mui/material/Paper";
 import { Button, TableHead } from "@mui/material";
 import { useMutation, useQuery } from "react-query";
 import { deteleCategoryData, getCategoryData } from "../../api";
-import CreateModal from "./CreatModal";
 import DeleteModal from "../../components/DeleteModal";
 import { toast } from "react-toastify";
+import CreateCategory from "./CreateCategory";
 import EditModal from "./EditModal";
+// import EditModal from "./EditModal";
 
-const Contacts = () => {
+const SubCategory = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const {
@@ -38,6 +39,7 @@ const Contacts = () => {
         console.log("Xatolik yuzberdi delete qilishda!");
       });
   });
+
 
   return (
     <Box m="20px">
@@ -88,28 +90,32 @@ const Contacts = () => {
                   </b>
                 </TableCell>
                 <TableCell align="right">
-                  <CreateModal refetch={refetch} />
+                  <CreateCategory refetch={refetch} />
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {data?.objectKoinot?.length > 0 &&
                 data?.objectKoinot.map((worker) => (
-                  <TableRow key={worker.id}>
-                    <TableCell>{worker.nameUz}</TableCell>
-                    <TableCell>{worker.nameRu}</TableCell>
-                    <TableCell align="right">
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "flex-end",
-                        }}>
-                        <DeleteModal mutate={mutate} data={worker?.id} />
-                        <EditModal data={worker.id} />
-                      </div>
-                    </TableCell>
-                  </TableRow>
+                  <>
+                    {worker.children.map((children) => (
+                      <TableRow key={children.id}>
+                        <TableCell>{children.nameUz}</TableCell>
+                        <TableCell>{children.nameRu}</TableCell>
+                        <TableCell align="right">
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "flex-end",
+                            }}>
+                            <DeleteModal mutate={mutate} data={children?.id} />
+                            <EditModal edit={children.id} />
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </>
                 ))}
             </TableBody>
           </Table>
@@ -119,4 +125,4 @@ const Contacts = () => {
   );
 };
 
-export default Contacts;
+export default SubCategory;

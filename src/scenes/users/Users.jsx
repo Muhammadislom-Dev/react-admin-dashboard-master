@@ -51,8 +51,7 @@ const Users = () => {
         display="flex"
         alignItems="center"
         justifyContent="center"
-        height={"80vh"}
-      >
+        height={"80vh"}>
         <CircularProgress
           color="success"
           style={{ width: "100px", height: "100px" }}
@@ -90,15 +89,10 @@ const Users = () => {
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
           },
-        }}
-      >
+        }}>
         <TableContainer component={Paper} variant="outlined">
           <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-            <TableHead
-              style={{
-                backgroundColor: "rgb(220, 220, 220)",
-              }}
-            >
+            <TableHead>
               <TableRow>
                 <TableCell>
                   <b>
@@ -159,9 +153,8 @@ const Users = () => {
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "flex-end",
-                          }}
-                        >
-                          {/* <UserEditModal id={company.id} /> */}
+                          }}>
+                          <UserEditModal id={company.id} />
                           {/* <DeleteModal mutate={mutate} data={worker?.id} /> */}
                         </div>
                       </TableCell>

@@ -4,7 +4,7 @@ import { tokens } from "../../theme";
 import { mockDataInvoices } from "../../data/mockData";
 import Header from "../../components/Header";
 import CreateModal from "./CreatModal";
-import { getBlogPostData } from "../../api";
+import { deteleBlogData, getBlogPostData } from "../../api";
 import { useMutation, useQuery } from "react-query";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -18,6 +18,7 @@ import { PAGE_SIZE } from "../team";
 import Pagination from "../../components/Pagination";
 import DeleteModal from "../../components/DeleteModal";
 import EditModal from "./EditModal";
+import { toast } from "react-toastify";
 
 const Invoices = () => {
   const theme = useTheme();
@@ -37,6 +38,20 @@ const Invoices = () => {
       data?.objectKoinot.content?.slice(firstPageIndex, lastPageIndex)
     );
   }, [memberPage, data?.objectKoinot.content]);
+  const { mutate } = useMutation(async (userId) => {
+    return await deteleBlogData(userId)
+      .then((res) => {
+        toast.success("Malumot muvaffaqiyatli o'chirildi!");
+        toast.success("Ma'lumotlar yangilandi!");
+        refetch();
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log("Mutation error", err);
+        console.log("Xatolik yuzberdi delete qilishda!");
+      });
+  });
+
   if (singleStatisticsLoading) {
     return (
       <Box
@@ -54,7 +69,7 @@ const Invoices = () => {
 
   return (
     <Box m="20px">
-      <Header title="INVOICES" subtitle="List of Invoice Balances" />
+      <Header title="Blog Page" subtitle="List of Invoice Balances" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -85,10 +100,7 @@ const Invoices = () => {
         }}>
         <TableContainer component={Paper} variant="outlined">
           <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-            <TableHead
-              style={{
-                backgroundColor: "rgb(220, 220, 220)",
-              }}>
+            <TableHead>
               <TableRow>
                 <TableCell>
                   <b>
@@ -127,7 +139,7 @@ const Invoices = () => {
                             justifyContent: "flex-end",
                           }}>
                           <EditModal id={company.id} refetch={refetch} />
-                          {/* <DeleteModal mutate={mutate} data={worker?.id} /> */}
+                          <DeleteModal mutate={mutate} data={company?.id} />
                         </div>
                       </TableCell>
                     </TableRow>

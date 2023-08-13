@@ -97,10 +97,7 @@ const Team = () => {
         }}>
         <TableContainer component={Paper} variant="outlined">
           <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-            <TableHead
-              style={{
-                backgroundColor: "rgb(220, 220, 220)",
-              }}>
+            <TableHead>
               <TableRow>
                 <TableCell>
                   <b>

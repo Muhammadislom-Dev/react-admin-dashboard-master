@@ -6,27 +6,36 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { TextField } from "@mui/material";
-import { API, postTagData } from "../../api";
-import { useMutation } from "react-query";
+import { API, getCategoryData, postTagData } from "../../api";
+import { useMutation, useQuery } from "react-query";
 import { toast } from "react-toastify";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import ListItemText from "@mui/material/ListItemText";
+import Select from "@mui/material/Select";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function CreateModal({ refetch }) {
+export default function EditModal({ edit }) {
   const [open, setOpen] = React.useState(false);
-  const [image, setImage] = React.useState("");
-  const [selectedFile, setSelectedFile] = React.useState(null);
   const [formData, setFormData] = React.useState({
     nameRu: "",
     nameUz: "",
-    icon: "",
+    parentCategory: 1,
+    id: edit,
   });
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+  const {
+    data,
+    isLoading: singleCompanyLoading,
+    refetch,
+  } = useQuery("categoryData", getCategoryData);
   const { mutate: postCategoryMutate, isLoading } = useMutation(
     async (payload) => {
       return await API.postCategoryData(payload)
@@ -57,14 +66,11 @@ export default function CreateModal({ refetch }) {
     postCategoryMutate({ ...formData, parentCategory: null });
   };
 
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
-
+  console.log(formData);
   return (
     <div>
       <Button variant="contained" color="primary" onClick={handleClickOpen}>
-        Add
+        Edit
       </Button>
       <Dialog
         open={open}
@@ -96,14 +102,28 @@ export default function CreateModal({ refetch }) {
               />
             </div>
             <div>
-              <TextField
-                sx={{ width: 550, marginBottom: "10px" }}
-                label="Icon code"
-                name="icon"
-                required
-                value={formData.icon}
-                onChange={handleChange}
-              />
+              <FormControl sx={{ m: 1, width: 300 }}>
+                <Select
+                  displayEmpty
+                  onChange={(e) =>
+                    setFormData((state) => ({
+                      ...state,
+                      parentCategory: e.target.value,
+                    }))
+                  }
+                  value={formData.parentCategory}
+                  inputProps={{ "aria-label": "Without label" }}>
+                  {data?.objectKoinot?.length ? (
+                    data?.objectKoinot?.map((el, index) => (
+                      <MenuItem key={index} value={el?.id}>
+                        {el?.nameUz}
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <MenuItem value={1}>Kiyim-Kechak</MenuItem>
+                  )}
+                </Select>
+              </FormControl>
             </div>
           </DialogContent>
           <DialogActions>

@@ -48,17 +48,15 @@ const MultipleSelect = ({ data, setFormData, objKey }) => {
   return (
     <div>
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"
           id="demo-multiple-checkbox"
           multiple
           value={tags?.map((el) => el.tag)}
           onChange={handleChange}
-          input={<OutlinedInput label="Tag" />}
+          input={<OutlinedInput />}
           renderValue={(selected) => selected.join(", ")}
-          MenuProps={MenuProps}
-        >
+          MenuProps={MenuProps}>
           {data?.map((el) => (
             <MenuItem key={el.id} value={el.id}>
               <Checkbox

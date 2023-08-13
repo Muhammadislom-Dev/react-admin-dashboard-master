@@ -18,8 +18,7 @@ const Form = () => {
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
-        validationSchema={checkoutSchema}
-      >
+        validationSchema={checkoutSchema}>
         {({
           values,
           errors,
@@ -35,8 +34,7 @@ const Form = () => {
               gridTemplateColumns="repeat(4, minmax(0, 1fr))"
               sx={{
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-              }}
-            >
+              }}>
               <TextField
                 fullWidth
                 variant="filled"

@@ -26,6 +26,14 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 const roles = [
   { id: "ROLE_ADMIN", tag: "admin" },
   { id: "ROLE_USER", tag: "user" },
+  {
+    id: "ROLE_MODERATOR",
+    tag: "moderator",
+  },
+  {
+    id: "ROLE_SUPPER_ADMIN",
+    tag: "super_admin",
+  },
 ];
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -41,7 +49,7 @@ const UserCreateModal = ({ refetch }) => {
     password: true,
     phoneNumber: "",
     photoId: 0,
-    roles: ["ROLE_ADMIN"],
+    roles: ["ROLE_ADMIN,ROLE_USER,ROLE_SUPPER_ADMIN", "ROLE_MODERATOR"],
   });
 
   const { mutate } = useMutation((payload) =>
@@ -94,8 +102,7 @@ const UserCreateModal = ({ refetch }) => {
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-      >
+        aria-describedby="alert-dialog-slide-description">
         <DialogTitle>{"Blog Name"}</DialogTitle>
         <form onSubmit={handleSubmit}>
           <DialogContent>
@@ -105,8 +112,7 @@ const UserCreateModal = ({ refetch }) => {
                 alignItems: "center",
                 marginBottom: "10px",
                 justifyContent: "space-between",
-              }}
-            >
+              }}>
               <input
                 id="image-input"
                 className="form-control"
@@ -147,8 +153,7 @@ const UserCreateModal = ({ refetch }) => {
             <div>
               <FormControl
                 variant="outlined"
-                sx={{ width: 550, marginBottom: "10px" }}
-              >
+                sx={{ width: 550, marginBottom: "10px" }}>
                 <InputLabel htmlFor="outlined-adornment-password">
                   Password
                 </InputLabel>
@@ -161,8 +166,7 @@ const UserCreateModal = ({ refetch }) => {
                         aria-label="toggle password visibility"
                         onClick={handleClickShowPassword}
                         onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
+                        edge="end">
                         {showPassword ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
                     </InputAdornment>
@@ -194,8 +198,7 @@ const UserCreateModal = ({ refetch }) => {
                 alignItems: "center",
                 marginBottom: "10px",
                 justifyContent: "space-between",
-              }}
-            >
+              }}>
               <MultipleSelect
                 data={roles}
                 setFormData={setFormData}
