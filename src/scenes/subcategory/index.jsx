@@ -43,7 +43,7 @@ const SubCategory = () => {
 
   return (
     <Box m="20px">
-      <Header title="Sub Kategoriyalars" />
+      <Header title="Sub Kategoriyalar" />
       <Box
         m="40px 0 0 0"
         height="75vh"
