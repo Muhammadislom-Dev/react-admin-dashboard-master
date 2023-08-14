@@ -5,39 +5,35 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
-import { TextField } from "@mui/material";
-import { API, postTagData } from "../../api";
+import { MenuItem, Select, TextField } from "@mui/material";
 import { useMutation } from "react-query";
+import { API } from "../../api";
 import { toast } from "react-toastify";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function CreateModal({ refetch }) {
+export default function ProductCreate({ refetch, edit }) {
   const [open, setOpen] = React.useState(false);
-  const [selectedFile, setSelectedFile] = React.useState(null);
-  const [formData, setFormData] = React.useState({
-    nameRu: "",
-    nameUz: "",
-    icon: "",
-  });
+  const [top, setTop] = React.useState(false);
+  const [accepted, setAccepted] = React.useState(false);
+  const [telegram, setTelegram] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const { mutate: postCategoryMutate, isLoading } = useMutation(
     async (payload) => {
-      return await API.postCategoryData(payload)
+      return await API.postControllerData(top, accepted, edit, telegram)
         .then((res) => {
-          console.log(res.data);
-          toast.success("Category muvafaqiyatli yaratildi");
+          toast.success("Mahsulot muvafaqiyatli tahrirlandi");
           refetch();
           handleClose();
         })
         .catch((err) => {
           console.log(err);
-          toast.danger("Categorys yaratilmadi qaytadan urinib ko'ring");
+          toast.error("Mahsulot tahrirlanmadi qaytadan urinib ko'ring");
         });
     }
   );
@@ -46,18 +42,9 @@ export default function CreateModal({ refetch }) {
     setOpen(false);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    postCategoryMutate({ ...formData, parentCategory: null });
-  };
-
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
+    postCategoryMutate();
   };
 
   return (
@@ -75,34 +62,40 @@ export default function CreateModal({ refetch }) {
         <form onSubmit={handleSubmit}>
           <DialogContent>
             <div>
-              <TextField
+              <Select
                 sx={{ width: 550, marginBottom: "10px" }}
-                label="Name Uz"
-                name="nameUz"
+                label="ACCEPTED"
+                name="accepted"
                 required
-                value={formData.nameUz}
-                onChange={handleChange}
-              />
+                value={accepted}
+                onChange={(e) => setAccepted(e.target.value)}>
+                <MenuItem value={true}>true</MenuItem>
+                <MenuItem value={false}>false</MenuItem>
+              </Select>
             </div>
             <div>
-              <TextField
+              <Select
                 sx={{ width: 550, marginBottom: "10px" }}
-                label="Name Ru"
-                name="nameRu"
+                label="TOP"
+                name="top"
                 required
-                value={formData.nameRu}
-                onChange={handleChange}
-              />
+                value={top}
+                onChange={(e) => setTop(e.target.value)}>
+                <MenuItem value={true}>true</MenuItem>
+                <MenuItem value={false}>false</MenuItem>
+              </Select>
             </div>
             <div>
-              <TextField
+              <Select
                 sx={{ width: 550, marginBottom: "10px" }}
-                label="Icon code"
-                name="icon"
+                label="Telegram"
+                name="top"
                 required
-                value={formData.icon}
-                onChange={handleChange}
-              />
+                value={telegram}
+                onChange={(e) => setTelegram(e.target.value)}>
+                <MenuItem value={true}>true</MenuItem>
+                <MenuItem value={false}>false</MenuItem>
+              </Select>
             </div>
           </DialogContent>
           <DialogActions>

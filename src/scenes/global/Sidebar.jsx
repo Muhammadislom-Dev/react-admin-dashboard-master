@@ -183,6 +183,13 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
+              title="Mahsulotlar"
+              to="/product"
+              icon={<ContactsOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
               title="Blog yaratish"
               to="/invoices"
               icon={<ReceiptOutlinedIcon />}

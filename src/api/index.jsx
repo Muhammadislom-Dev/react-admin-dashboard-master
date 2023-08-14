@@ -28,7 +28,10 @@ export const API = {
   postBlog: (payload) => axiosInstance.post("/blog/v1", payload),
   postCategoryData: (payload) => axiosInstance.post("/category/v1", payload),
   postUserData: (payload) => axiosInstance.post("/user/v1/register", payload),
-
+  postControllerData: (top, edit, accepted, telegram) =>
+    axiosInstance.post(
+      `/product/v1/control/${accepted}?accepted=${edit}&deleteInTelegram=${telegram}&top=${top}`
+    ),
   //GET REQUEST
   getUserData: (payload) =>
     axiosInstance.get("/user/v1?page=0&size=100&sortBy=id", payload),
@@ -117,8 +120,29 @@ export const getCategoryData = async () => {
   return response.data;
 };
 
+export const getProductData = async () => {
+  const response = await axios.get(
+    `${API_BASE_URL}/product/v1?page=0&size=50`,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
+      },
+    }
+  );
+  return response.data;
+};
+
 export const deteleCategoryData = async (id) => {
   const response = await axios.delete(`${API_BASE_URL}/category/v1/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
+    },
+  });
+  return response.data;
+};
+
+export const deteleProductData = async (id) => {
+  const response = await axios.delete(`${API_BASE_URL}/product/v1/${id}`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
     },

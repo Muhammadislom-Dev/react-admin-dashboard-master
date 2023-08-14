@@ -12,6 +12,7 @@ import { ColorModeContext, useMode } from "./theme";
 import Login from "./components/Login";
 import Users from "./scenes/users/Users";
 import SubCategory from "./scenes/subcategory";
+import Product from "./scenes/product";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -34,6 +35,7 @@ function App() {
                 <Route path="/invoices" element={<Invoices />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/category" element={<SubCategory />} />
+                <Route path="/product" element={<Product />} />
               </Routes>
             </main>
           </div>
