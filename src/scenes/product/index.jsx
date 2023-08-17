@@ -115,6 +115,11 @@ const Product = () => {
                     <i>Name Uz</i>
                   </b>
                 </TableCell>
+                <TableCell>
+                  <b>
+                    {/* <i>Name Uz</i> */}
+                  </b>
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

@@ -103,7 +103,7 @@ const UserCreateModal = ({ refetch }) => {
         keepMounted
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description">
-        <DialogTitle>{"Blog Name"}</DialogTitle>
+        <DialogTitle>{"User Edit"}</DialogTitle>
         <form onSubmit={handleSubmit}>
           <DialogContent>
             <div

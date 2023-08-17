@@ -42,11 +42,28 @@ body,
   background: #555;
 }
 
-
-
 .pagination-bar {
   width: 100%;
   display: flex;
   justify-content: flex-start;
   margin-top: 10px;
+}
+
+.css-121m6l1-MuiPaper-root-MuiTableContainer-root {
+  background-color: #1f2a40 !important;
+}
+.css-h2cton-MuiPaper-root-MuiTableContainer-root {
+  background-color: #f2f2f2 !important;
+  font-size: 18px !important;
+}
+
+/* .css-1epr1cs-MuiButtonBase-root-MuiButton-root */
+
+
+.css-1iduqq9-MuiButtonBase-root-MuiButton-root{
+  color: #f2f2f2 !important;
+}
+
+.css-e8drjz{
+  padding: 10px 15px !important;
 }

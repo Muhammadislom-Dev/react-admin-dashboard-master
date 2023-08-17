@@ -62,39 +62,48 @@ export default function ProductCreate({ refetch, edit }) {
         <form onSubmit={handleSubmit}>
           <DialogContent>
             <div>
+              <label style={{ marginBottom: "10px" }} htmlFor="">
+                Oddiy sifatida qolsinmi?
+              </label>
               <Select
                 sx={{ width: 550, marginBottom: "10px" }}
-                label="ACCEPTED"
+                // label="Oddiy sifatida qolsinmi?"
                 name="accepted"
                 required
                 value={accepted}
                 onChange={(e) => setAccepted(e.target.value)}>
-                <MenuItem value={true}>true</MenuItem>
-                <MenuItem value={false}>false</MenuItem>
+                <MenuItem value={true}>Ha </MenuItem>
+                <MenuItem value={false}>Yo'q</MenuItem>
               </Select>
             </div>
             <div>
+              <label style={{ marginBottom: "10px" }} htmlFor="">
+                Topga chiqishini xohlaysizmi?
+              </label>
               <Select
                 sx={{ width: 550, marginBottom: "10px" }}
-                label="TOP"
+                // label="Topga chiqishini xohlaysizmi?"
                 name="top"
                 required
                 value={top}
                 onChange={(e) => setTop(e.target.value)}>
-                <MenuItem value={true}>true</MenuItem>
-                <MenuItem value={false}>false</MenuItem>
+                <MenuItem value={true}>Ha</MenuItem>
+                <MenuItem value={false}>Yo'q</MenuItem>
               </Select>
             </div>
             <div>
+              <label style={{ marginBottom: "10px" }} htmlFor="">
+                Telegram bot orqali yuborilsinmi
+              </label>
               <Select
                 sx={{ width: 550, marginBottom: "10px" }}
-                label="Telegram"
+                // label="Telegram bot orqali yuborilsinmi"
                 name="top"
                 required
                 value={telegram}
                 onChange={(e) => setTelegram(e.target.value)}>
-                <MenuItem value={true}>true</MenuItem>
-                <MenuItem value={false}>false</MenuItem>
+                <MenuItem value={true}>Ha</MenuItem>
+                <MenuItem value={false}>Yo'q</MenuItem>
               </Select>
             </div>
           </DialogContent>

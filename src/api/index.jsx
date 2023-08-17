@@ -1,5 +1,5 @@
 import axios from "axios";
-export const API_BASE_URL = "http://143.198.64.152:1777/api"; // API ning manzili
+export const API_BASE_URL = "https://tekinmarket.uz/api"; // API ning manzili
 const axiosInstance = axios;
 axiosInstance.defaults.baseURL = API_BASE_URL;
 
