@@ -63,11 +63,10 @@ export default function ProductCreate({ refetch, edit }) {
           <DialogContent>
             <div>
               <label style={{ marginBottom: "10px" }} htmlFor="">
-                Oddiy sifatida qolsinmi?
+                 Bu mahsulot tasdiqlansinmi?
               </label>
               <Select
                 sx={{ width: 550, marginBottom: "10px" }}
-                // label="Oddiy sifatida qolsinmi?"
                 name="accepted"
                 required
                 value={accepted}
@@ -82,7 +81,6 @@ export default function ProductCreate({ refetch, edit }) {
               </label>
               <Select
                 sx={{ width: 550, marginBottom: "10px" }}
-                // label="Topga chiqishini xohlaysizmi?"
                 name="top"
                 required
                 value={top}
@@ -93,11 +91,10 @@ export default function ProductCreate({ refetch, edit }) {
             </div>
             <div>
               <label style={{ marginBottom: "10px" }} htmlFor="">
-                Telegram bot orqali yuborilsinmi
+                 Kanaldan o'chirilsinmi?
               </label>
               <Select
                 sx={{ width: 550, marginBottom: "10px" }}
-                // label="Telegram bot orqali yuborilsinmi"
                 name="top"
                 required
                 value={telegram}
