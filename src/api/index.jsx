@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 export const API_BASE_URL = "https://tekinmarket.uz/api"; // API ning manzili
 const axiosInstance = axios;
 axiosInstance.defaults.baseURL = API_BASE_URL;
@@ -43,11 +44,14 @@ export const adminLoginData = async (formData) => {
     .post(`${API_BASE_URL}/auth/v1/login`, formData)
     .then((res) => {
       window.location.reload();
+      toast.success("Muvaffaqiyatli kirildi!")
       localStorage.setItem(
         "tekin_market_token",
         `${res?.data?.objectKoinot?.accessToken}`
       );
-    });
+    }).catch((err) => {
+      toast.error("Sizning parol yoki raqamingiz xato!")
+    })
   return response.data;
 };
 

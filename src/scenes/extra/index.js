@@ -8,7 +8,7 @@ export const fileUploadFunc = async ({ data, setFormData }) => {
         ...prev,
         photoId: res.data.objectKoinot[0].id,
       }));
-      toast.success("Rasim muvofaqiyatli yuklandi");
+      toast.success("Rasim muvafaqiyatli yuklandi");
     })
     .catch((err) => {
       console.log(err);
