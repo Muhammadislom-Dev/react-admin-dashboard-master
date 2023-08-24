@@ -10,40 +10,19 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button, TableHead } from "@mui/material";
 import { useMutation, useQuery } from "react-query";
-import { deteleCategoryData, getCategoryData } from "../../api";
-import DeleteModal from "../../components/DeleteModal";
+import { deteleCategoryData, getCategoryData, getEmailData } from "../../api";
 import { toast } from "react-toastify";
 import CreateCategory from "./CreateCategory";
-import EditModal from "./EditModal";
-// import EditModal from "./EditModal";
 
 const SubCategory = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const {
-    data,
-    isLoading: singleCompanyLoading,
-    refetch,
-  } = useQuery("categoryData", getCategoryData);
+  const { data, refetch } = useQuery("emailData", getEmailData);
 
-  const { mutate } = useMutation(async (userId) => {
-    return await deteleCategoryData(userId)
-      .then((res) => {
-        toast.success("Malumot muvaffaqiyatli o'chirildi!");
-        toast.success("Ma'lumotlar yangilandi!");
-        refetch();
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log("Mutation error", err);
-        console.log("Xatolik yuzberdi delete qilishda!");
-      });
-  });
-
-
+  console.log(data);
   return (
     <Box m="20px">
-      <Header title="Sub Kategoriyalar" />
+      <Header title="Email" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -81,40 +60,18 @@ const SubCategory = () => {
               <TableRow>
                 <TableCell>
                   <b>
-                    <i>Name Uz</i>
+                    <i>Email</i>
                   </b>
-                </TableCell>
-                <TableCell>
-                  <b>
-                    <i>Name Ru</i>
-                  </b>
-                </TableCell>
-                <TableCell align="right">
-                  <CreateCategory refetch={refetch} />
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data?.objectKoinot?.length > 0 &&
-                data?.objectKoinot.map((worker) => (
+              {data?.objectKoinot?.content?.length > 0 &&
+                data?.objectKoinot?.content?.map((worker) => (
                   <>
-                    {worker.children.map((children) => (
-                      <TableRow key={children.id}>
-                        <TableCell>{children.nameUz}</TableCell>
-                        <TableCell>{children.nameRu}</TableCell>
-                        <TableCell align="right">
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "flex-end",
-                            }}>
-                            <DeleteModal mutate={mutate} data={children?.id} />
-                            <EditModal edit={children.id} />
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                    <TableRow key={worker.id}>
+                      <TableCell>{worker.email}</TableCell>
+                    </TableRow>
                   </>
                 ))}
             </TableBody>

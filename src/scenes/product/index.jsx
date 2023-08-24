@@ -116,9 +116,7 @@ const Product = () => {
                   </b>
                 </TableCell>
                 <TableCell>
-                  <b>
-                    {/* <i>Name Uz</i> */}
-                  </b>
+                  <b>{/* <i>Name Uz</i> */}</b>
                 </TableCell>
               </TableRow>
             </TableHead>

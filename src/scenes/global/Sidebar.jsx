@@ -176,7 +176,7 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="SubCategory yaratish"
+              title="Email"
               to="/category"
               icon={<ContactsOutlinedIcon />}
               selected={selected}

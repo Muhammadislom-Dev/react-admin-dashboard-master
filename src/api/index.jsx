@@ -44,14 +44,15 @@ export const adminLoginData = async (formData) => {
     .post(`${API_BASE_URL}/auth/v1/login`, formData)
     .then((res) => {
       window.location.reload();
-      toast.success("Muvaffaqiyatli kirildi!")
+      toast.success("Muvaffaqiyatli kirildi!");
       localStorage.setItem(
         "tekin_market_token",
         `${res?.data?.objectKoinot?.accessToken}`
       );
-    }).catch((err) => {
-      toast.error("Sizning parol yoki raqamingiz xato!")
     })
+    .catch((err) => {
+      toast.error("Sizning parol yoki raqamingiz xato!");
+    });
   return response.data;
 };
 
@@ -117,6 +118,15 @@ export const getUserData = async () => {
 
 export const getCategoryData = async () => {
   const response = await axios.get(`${API_BASE_URL}/category/v1`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
+    },
+  });
+  return response.data;
+};
+
+export const getEmailData = async () => {
+  const response = await axios.get(`${API_BASE_URL}/email/v1??page=0&size=40`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
     },
