@@ -47,7 +47,7 @@ const UserEditModal = ({ refetch, id }) => {
     lastName: "",
     password: true,
     phoneNumber: "",
-    photoId: 0,
+    photoId: null,
     id: id,
     roles: ["ROLE_ADMIN,ROLE_USER,ROLE_SUPPER_ADMIN", "ROLE_MODERATOR"],
   });
@@ -106,7 +106,7 @@ const UserEditModal = ({ refetch, id }) => {
         <DialogTitle>{"User Edit"}</DialogTitle>
         <form onSubmit={handleSubmit}>
           <DialogContent>
-            <div
+            {/* <div
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -129,7 +129,7 @@ const UserEditModal = ({ refetch, id }) => {
                   mutate({ key: e.target.files[0] });
                 }}
               />
-            </div>
+            </div> */}
             <div>
               <TextField
                 sx={{ width: 550, marginBottom: "10px" }}

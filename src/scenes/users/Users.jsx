@@ -1,15 +1,16 @@
 import {
   Box,
   CircularProgress,
-  Pagination,
+  FormControl,
+  MenuItem,
   Paper,
+  Select,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  colors,
 } from "@mui/material";
 import React from "react";
 import Header from "../../components/Header";
@@ -19,32 +20,30 @@ import { useTheme } from "@emotion/react";
 import { useState } from "react";
 import { tokens } from "../../theme";
 import { useQuery } from "react-query";
-import { API, getBlogPostData } from "../../api";
+import { getUserData } from "../../api";
 import { PAGE_SIZE } from "../team";
+import Pagination from "../../components/Pagination";
 import UserEditModal from "./UserEditModal";
 
 const Users = () => {
   const theme = useTheme();
+  const [formData, setFormData] = React.useState("ROLE_USER");
   const [memberPage, setMemberPage] = useState(1);
   const colors = tokens(theme.palette.mode);
   const {
     data,
     isLoading: singleStatisticsLoading,
     refetch,
-  } = useQuery("getUsersData", async () => {
-    const res = await API.getUserData()
-      .then((res) => res.data)
-      .catch((err) => console.log("userlar mavjud emas", err));
-    return res;
-  });
+  } = useQuery(["paramsDataUser", formData], () => getUserData(formData));
+
   const memberTableData = useMemo(() => {
     const firstPageIndex = (memberPage - 1) * PAGE_SIZE;
     const lastPageIndex = firstPageIndex + PAGE_SIZE;
     return (
-      !!data?.objectKoinot.content &&
+      !!data?.objectKoinot?.content &&
       data?.objectKoinot.content?.slice(firstPageIndex, lastPageIndex)
     );
-  }, [memberPage, data?.objectKoinot.content]);
+  }, [memberPage, data?.objectKoinot?.content]);
   if (singleStatisticsLoading) {
     return (
       <Box
@@ -62,6 +61,20 @@ const Users = () => {
   return (
     <Box m="20px">
       <Header title="Users" subtitle="List of Invoice Balances" />
+      <Box>
+        <FormControl sx={{ width: 300, border: "2px solid gray" }}>
+          <Select
+            labelId="demo-multiple-checkbox-label"
+            id="demo-multiple-checkbox"
+            value={formData}
+            onChange={(e) => setFormData(e.target.value)}>
+            <MenuItem value="ROLE_MODERATOR">ROLE_MODERATOR</MenuItem>
+            <MenuItem value="ROLE_ADMIN">ROLE_ADMIN</MenuItem>
+            <MenuItem value="ROLE_USER">ROLE_USER</MenuItem>
+            <MenuItem value="ROLE_SUPPER_ADMIN">ROLE_SUPPER_ADMIN</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -94,11 +107,6 @@ const Users = () => {
           <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
             <TableHead>
               <TableRow>
-                <TableCell>
-                  <b>
-                    <i>Image</i>
-                  </b>
-                </TableCell>
                 <TableCell>
                   <b>
                     <i>firstName</i>
@@ -134,14 +142,6 @@ const Users = () => {
                 memberTableData?.map((company) => (
                   <>
                     <TableRow key={company.id}>
-                      <img
-                        src={company.photo?.filePath}
-                        height={50}
-                        width={80}
-                        style={{
-                          objectFit: "contain",
-                        }}
-                      />
                       <TableCell>{company.firstName}</TableCell>
                       <TableCell>{company.lastName}</TableCell>
                       <TableCell>{company.username}</TableCell>

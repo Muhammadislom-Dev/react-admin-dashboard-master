@@ -34,9 +34,72 @@ export const API = {
       `/product/v1/control/${accepted}?accepted=${edit}&deleteInTelegram=${telegram}&top=${top}`
     ),
   //GET REQUEST
-  getUserData: (payload) =>
-    axiosInstance.get("/user/v1?page=0&size=100&sortBy=id", payload),
+  // getUserData: (payload) =>
+  //   axiosInstance.get(`/user/v1?page=0&role=${payload.formData}&size=100`),
   // getStaticsData: (payload) => axiosInstance.get("/adminVariables/v1", payload),
+};
+
+export const postActiveData = async (active, newId) => {
+  const response = await axios
+    .post(
+      `${API_BASE_URL}/product/v1/control/${newId}?accepted=${active}&deleteInTelegram&top`
+    )
+    .then((res) => {
+      console.log(res.data);
+      toast.success("Mahsulot muvaffaqiyatli tasdiqlandi!");
+    })
+    .catch((err) => {
+      console.log(err);
+      toast.error("Sizda xatolik yuzaga keldi!");
+    });
+  return response.data;
+};
+
+export const postTelegramData = async (active, newId) => {
+  const response = await axios
+    .post(
+      `${API_BASE_URL}/product/v1/control/${newId}?accepted&deleteInTelegram=${active}&top`
+    )
+    .then((res) => {
+      console.log(res.data);
+      toast.success("Mahsulot muvaffaqiyatli telegram kanalga yuborildi!");
+    })
+    .catch((err) => {
+      console.log(err);
+      toast.error("Sizda xatolik yuzaga keldi!");
+    });
+  return response.data;
+};
+
+export const getUserData = async (formData) => {
+  const response = await axios.get(
+    `${API_BASE_URL}/user/v1?page=0&role=${formData}&size=100`,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const fetchRegionData = async () => {
+  const response = await axios.get(
+    `${API_BASE_URL}/region/v1/all?page=0&size=100`
+  );
+  return response.data;
+};
+
+export const fetchDistrictData = async (region) => {
+  const response = await axios.get(
+    `${API_BASE_URL}/district/v1/all?regionId=${region}`
+  );
+  return response.data;
+};
+
+export const getCategory = async () => {
+  const response = await axios.get(`${API_BASE_URL}/category/v1`);
+  return response.data;
 };
 
 export const adminLoginData = async (formData) => {
@@ -104,17 +167,17 @@ export const deteleTagData = async (id) => {
   return response.data;
 };
 
-export const getUserData = async () => {
-  const response = await axios.get(
-    `${API_BASE_URL}/user/v1?page=0&size=100&sortBy=id`,
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
-      },
-    }
-  );
-  return response.data;
-};
+// export const getUserData = async () => {
+//   const response = await axios.get(
+//     `${API_BASE_URL}/user/v1?page=0&size=100&sortBy=id`,
+//     {
+//       headers: {
+//         Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
+//       },
+//     }
+//   );
+//   return response.data;
+// };
 
 export const getCategoryData = async () => {
   const response = await axios.get(`${API_BASE_URL}/category/v1`, {
@@ -134,9 +197,9 @@ export const getEmailData = async () => {
   return response.data;
 };
 
-export const getProductData = async () => {
+export const getProductData = async (accepted, category, district, region) => {
   const response = await axios.get(
-    `${API_BASE_URL}/product/v1?page=0&size=50`,
+    `${API_BASE_URL}/product/v1?accepted=${accepted}&category=${category}&district=${district}&page=0&region=${region}&size=1000`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,

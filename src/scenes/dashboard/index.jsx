@@ -19,7 +19,24 @@ const Dashboard = () => {
       </Box>
 
       {/* GRID & CHARTS */}
-      <Box sx={{display:"flex",justifyContent:"space-between"}}>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box
+          sx={{
+            width: "250px",
+            borderRadius: "10px",
+            padding: "10px",
+            background: "#1F2A40",
+            margin: "10px 0",
+          }}>
+          Ro'yhatdan o'tkanlar soni
+          <Typography
+            sx={{
+              fontSize: "40px",
+              lineHeight: "45px",
+            }}>
+            {data?.objectKoinot?.users}
+          </Typography>
+        </Box>
         <Box
           sx={{
             width: "250px",
@@ -35,23 +52,6 @@ const Dashboard = () => {
               lineHeight: "45px",
             }}>
             {data?.objectKoinot?.products}
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            width: "250px",
-            borderRadius: "10px",
-            padding: "10px",
-            background: "#1F2A40",
-            margin: "10px 0",
-          }}>
-          Telefon raqam ko'rishlar soni
-          <Typography
-            sx={{
-              fontSize: "40px",
-              lineHeight: "45px",
-            }}>
-            {data?.objectKoinot?.seenPhoneNumbers}
           </Typography>
         </Box>
         <Box
@@ -79,13 +79,13 @@ const Dashboard = () => {
             background: "#1F2A40",
             margin: "10px 0",
           }}>
-          Ro'yhatdan o'tkanlar soni
+          Telefon raqam ko'rishlar soni
           <Typography
             sx={{
               fontSize: "40px",
               lineHeight: "45px",
             }}>
-            {data?.objectKoinot?.users}
+            {data?.objectKoinot?.seenPhoneNumbers}
           </Typography>
         </Box>
       </Box>

@@ -99,9 +99,6 @@ const Sidebar = () => {
                 justifyContent="space-between"
                 alignItems="center"
                 ml="15px">
-                <Typography variant="h3" color={colors.grey[100]}>
-                  ADMINIS
-                </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                   <MenuOutlinedIcon />
                 </IconButton>
@@ -155,42 +152,42 @@ const Sidebar = () => {
               Data
             </Typography>
             <Item
-              title="User yaratish"
+              title="Users"
               to="/users"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Tags yaratish"
+              title="Tags"
               to="/team"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Category yaratish"
+              title="Category"
               to="/contacts"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Email"
+              title="Emails"
               to="/category"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Mahsulotlar"
+              title="Products"
               to="/product"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Blog yaratish"
+              title="Blogs"
               to="/invoices"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}

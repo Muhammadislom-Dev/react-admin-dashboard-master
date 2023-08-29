@@ -1,4 +1,13 @@
-import { Box, CircularProgress } from "@mui/material";
+import {
+  Box,
+  Checkbox,
+  CircularProgress,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Select,
+} from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
@@ -10,7 +19,15 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { TableHead } from "@mui/material";
 import { useMutation, useQuery } from "react-query";
-import { deteleProductData, getProductData } from "../../api";
+import {
+  deteleProductData,
+  fetchDistrictData,
+  fetchRegionData,
+  getCategory,
+  getProductData,
+  postActiveData,
+  postTelegramData,
+} from "../../api";
 import DeleteModal from "../../components/DeleteModal";
 import { toast } from "react-toastify";
 import ProductCreate from "./ProductCreate";
@@ -19,15 +36,31 @@ import { PAGE_SIZE } from "../team";
 import { useState } from "react";
 import Pagination from "../../components/Pagination";
 
+const label = { inputProps: { "aria-label": "Checkbox demo" } };
 const Product = () => {
   const [memberPage, setMemberPage] = useState(1);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [accepted, setAccepted] = useState("");
+  const [search, setSearch] = useState("");
+  const [district, setDistrict] = useState("");
+  const [region, setRegion] = useState("");
+  const [category, setCategory] = useState("");
   const {
     data: product,
     refetch,
     isLoading,
-  } = useQuery("productData", getProductData);
+  } = useQuery(
+    ["paramsProductData", accepted, category, district, region],
+    () => getProductData(accepted, category, district, region)
+  );
+  const { data: regionData } = useQuery("exampleData", fetchRegionData);
+
+  const { data: districtData } = useQuery(["districtData", region], () =>
+    fetchDistrictData(region)
+  );
+
+  const { data: categoryData } = useQuery("get category", getCategory);
 
   const { mutate } = useMutation(async (userId) => {
     return await deteleProductData(userId)
@@ -51,6 +84,35 @@ const Product = () => {
       product?.content?.slice(firstPageIndex, lastPageIndex)
     );
   }, [memberPage, product?.content]);
+  const [newId, setNewId] = useState("");
+  const [activeStates, setActiveStates] = useState({});
+  const active = activeStates?.isToggled;
+
+  const { mutate: activeMutate } = useMutation(
+    ["statusParams", active, newId],
+    () => postActiveData(active, newId)
+  );
+
+  const { mutate: TelegramMutate } = useMutation(
+    ["telegramData", active, newId],
+    () => postTelegramData(active, newId)
+  );
+
+  const handleTelegramToogle = (id) => {
+    const updatedActiveStates = {
+      isToggled: !activeStates[id]?.isToggled,
+    };
+    setActiveStates(updatedActiveStates);
+    TelegramMutate();
+  };
+
+  const handleToggle = (id) => {
+    const updatedActiveStates = {
+      isToggled: !activeStates[id]?.isToggled,
+    };
+    setActiveStates(updatedActiveStates);
+    activeMutate();
+  };
 
   if (isLoading) {
     return (
@@ -70,6 +132,88 @@ const Product = () => {
   return (
     <Box m="20px">
       <Header title="Mahsulotlar" />
+      <Box sx={{ display: "flex", alignItems: "center", gap: "50px" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}>
+          Mahsulotlar
+          <FormControl sx={{ width: 250, border: "2px solid gray" }}>
+            <Select
+              labelId="demo-multiple-name-label"
+              id="demo-multiple-name"
+              value={accepted}
+              onChange={(e) => setAccepted(e.target.value)}>
+              <MenuItem value={true}>Tasdiqlangan mahsulotlar</MenuItem>
+              <MenuItem value={false}>Tasdiqlanmagan mahsulotlar</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}>
+          Viloyatlar
+          <FormControl sx={{ width: 180, border: "2px solid gray" }}>
+            <Select
+              labelId="demo-multiple-name-label1"
+              id="demo-multiple-name"
+              value={region}
+              onChange={(e) => setRegion(e.target.value)}>
+              <MenuItem value="">Viloyatlar</MenuItem>
+              {regionData?.objectKoinot?.content?.map((data) => (
+                <MenuItem key={data.id} value={data.id}>
+                  {data.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}>
+          Tumanlar
+          <FormControl sx={{ width: 180, border: "2px solid gray" }}>
+            <Select
+              labelId="demo-multiple-name-label1"
+              id="demo-multiple-name"
+              value={district}
+              onChange={(e) => setDistrict(e.target.value)}>
+              {districtData?.objectKoinot?.content?.map((data) => (
+                <MenuItem key={data.id} value={data.id}>
+                  {data.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}>
+          Category
+          <FormControl sx={{ width: 180, border: "2px solid gray" }}>
+            <InputLabel id="demo-simple-select-label2">Category</InputLabel>
+            <Select
+              labelId="demo-multiple-name-label1"
+              id="demo-multiple-name"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}>
+              <MenuItem value="">Category</MenuItem>
+              {categoryData?.objectKoinot?.map((data) => (
+                <MenuItem key={data.id} value={data.id}>
+                  {data.nameUz}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -115,9 +259,9 @@ const Product = () => {
                     <i>Name Uz</i>
                   </b>
                 </TableCell>
-                <TableCell>
-                  <b>{/* <i>Name Uz</i> */}</b>
-                </TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -134,6 +278,24 @@ const Product = () => {
                         }}
                       />
                       <TableCell>{worker.name.slice(0, 25)}</TableCell>
+                      <TableCell onClick={() => setNewId(worker.id)}>
+                        Mahsulot tasdiqlash
+                        <Checkbox
+                          checked={activeStates[worker.id]?.isToggled}
+                          onChange={() => {
+                            handleToggle(worker.id);
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell onClick={() => setNewId(worker.id)}>
+                        Telegram kanal yuborilsinmi?
+                        <Checkbox
+                          checked={activeStates[worker.id]?.isToggled}
+                          onChange={() => {
+                            handleTelegramToogle(worker.id);
+                          }}
+                        />
+                      </TableCell>
                       <TableCell align="right">
                         <div
                           style={{
@@ -142,7 +304,7 @@ const Product = () => {
                             justifyContent: "flex-end",
                           }}>
                           <DeleteModal mutate={mutate} data={worker?.id} />
-                          <ProductCreate refetch={refetch} edit={worker.id} />
+                          {/* <ProductCreate refetch={refetch} edit={worker.id} /> */}
                         </div>
                       </TableCell>
                     </TableRow>
