@@ -15,6 +15,7 @@ import CreateModal from "./CreatModal";
 import DeleteModal from "../../components/DeleteModal";
 import { toast } from "react-toastify";
 import EditModal from "./EditModal";
+import SubCategoryData from "./SubCategory";
 
 const Contacts = () => {
   const theme = useTheme();
@@ -105,6 +106,7 @@ const Contacts = () => {
                           alignItems: "center",
                           justifyContent: "flex-end",
                         }}>
+                        <SubCategoryData data={worker.id} />
                         <DeleteModal mutate={mutate} data={worker?.id} />
                         <EditModal data={worker.id} />
                       </div>

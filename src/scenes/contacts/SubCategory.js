@@ -6,7 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { TextField } from "@mui/material";
-import { API, postTagData } from "../../api";
+import { API } from "../../api";
 import { useMutation } from "react-query";
 import { toast } from "react-toastify";
 
@@ -14,12 +14,15 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function EditModal({ data }) {
+export default function SubCategoryData({ data }) {
   const [open, setOpen] = React.useState(false);
   const [formData, setFormData] = React.useState({
     nameRu: "",
     nameUz: "",
-    id: data,
+    parentCategory: data,
+    photoId: null,
+    icon: null,
+    iconInSelect: null,
   });
   const handleClickOpen = () => {
     setOpen(true);
@@ -29,13 +32,11 @@ export default function EditModal({ data }) {
     async (payload) => {
       return await API.postCategoryData(payload)
         .then((res) => {
-          console.log(res.data);
-          toast.success("Category muvafaqiyatli tahrirlandi!");
+          toast.success("SubCategory muvafaqiyatli tahrirlandi!");
           handleClose();
         })
         .catch((err) => {
-          console.log(err);
-          toast.danger("Categorys yaratilmadi qaytadan urinib ko'ring");
+          toast.danger("SubCategory yaratilmadi qaytadan urinib ko'ring");
         });
     }
   );
@@ -51,13 +52,14 @@ export default function EditModal({ data }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(formData);
     postCategoryMutate({ ...formData, parentCategory: null });
   };
 
   return (
     <div>
       <Button variant="contained" color="primary" onClick={handleClickOpen}>
-        Edit
+        Create SubCategory
       </Button>
       <Dialog
         open={open}
