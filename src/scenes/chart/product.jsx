@@ -1,24 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
-import { getStaticsGraphData } from "../../api";
 import { useQuery } from "react-query";
+import { getStaticsGraph, getStaticsGraphProduct } from "../../api";
+import { useState } from "react";
+import { useEffect } from "react";
 
-const LineChart = () => {
+const LineChartProduct = () => {
   const [user, setUser] = useState([]);
-  const { data: lineGraph, isLoading } = useQuery(
-    ["lineGraphData", setUser],
-    () => getStaticsGraphData(setUser)
+  const { data: lineGraph } = useQuery(["lineGraphProduct", setUser], () =>
+    getStaticsGraphProduct(setUser)
   );
-
   let newTimeArray = [];
   let newCountsArray = [];
 
-  if (user && user?.seenProductsStats?.length > 0) {
-    const countsArray =
-      user && user?.seenProductsStats?.map((item) => item.count);
+  if (user && user.length > 0) {
+    const countsArray = user?.map((item) => item.count);
     newCountsArray = [...countsArray];
-    const timeArray = user && user?.seenProductsStats?.map((item) => item.time);
+
+    const timeArray = user?.map((item) => item.time);
     newTimeArray = [...timeArray];
   } else {
     console.log("user ma'lumotlari topilmadi yoki bo'sh.");
@@ -35,10 +35,9 @@ const LineChart = () => {
       },
     ],
   };
-
   return (
     <>
-      <h3>Get Product for the Seen</h3>
+      <h3>Product Create Statics</h3>
       <div style={{ width: "700px", margin: "25px 0", paddingBottom: "80px" }}>
         <Line data={data} />
       </div>
@@ -46,4 +45,4 @@ const LineChart = () => {
   );
 };
 
-export default LineChart;
+export default LineChartProduct;

@@ -5,6 +5,8 @@ import { useQuery } from "react-query";
 import { API, getStaticsData } from "../../api";
 import LineChart from "../chart";
 import LineChartUser from "../chart/line";
+import LineChartPhone from "../chart/phone";
+import LineChartProduct from "../chart/product";
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -139,8 +141,12 @@ const Dashboard = () => {
             </Typography>
           </Box>
         </Box>
-        <LineChart />
-        <LineChartUser />
+        <Box sx={{ height: "80vh", overflowY: "auto" }}>
+          <LineChartUser />
+          <LineChartProduct />
+          <LineChart />
+          <LineChartPhone />
+        </Box>
       </Box>
     </Box>
   );

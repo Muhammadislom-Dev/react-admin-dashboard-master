@@ -1,39 +1,44 @@
 import React from "react";
 import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
-
-const labels = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-const data = {
-  labels: labels,
-  datasets: [
-    {
-      label: "My First dataset",
-      backgroundColor: "rgb(255, 99, 132)",
-      borderColor: "rgb(255, 99, 132)",
-      data: [0, 10, 5, 2, 20, 30, 45, 55, 60, 65, 70, 90],
-    },
-  ],
-};
+import { useQuery } from "react-query";
+import { getStaticsGraph } from "../../api";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const LineChartUser = () => {
+  const [user, setUser] = useState([]);
+  const { data: lineGraph } = useQuery(["lineGraph", setUser], () =>
+    getStaticsGraph(setUser)
+  );
+  let newTimeArray = [];
+  let newCountsArray = [];
+
+  if (user && user.length > 0) {
+    const countsArray = user.map((item) => item.count);
+    newCountsArray = [...countsArray];
+
+    const timeArray = user.map((item) => item.time);
+    newTimeArray = [...timeArray];
+  } else {
+    console.log("user ma'lumotlari topilmadi yoki bo'sh.");
+  }
+
+  const data = {
+    labels: newTimeArray,
+    datasets: [
+      {
+        label: "My First dataset",
+        backgroundColor: "rgb(255, 99, 132)",
+        borderColor: "rgb(255, 99, 132)",
+        data: newCountsArray,
+      },
+    ],
+  };
   return (
     <>
-      <h3>Userlar uchun</h3>
-      <div style={{ width: "600px" }}>
+      <h3>Users register statics</h3>
+      <div style={{ width: "700px", margin: "25px 0", paddingBottom: "80px" }}>
         <Line data={data} />
       </div>
     </>

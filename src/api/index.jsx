@@ -199,6 +199,48 @@ export const getCategoryByIdData = async (category, setSubCategory) => {
   return response?.data;
 };
 
+export const getStaticsGraph = async (setUser) => {
+  const response = await axios
+    .get(
+      `${API_BASE_URL}/statistics/v1/user-product?from=2023-08-01&till=2023-08-30&user=true`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
+        },
+      }
+    )
+    .then((res) => setUser(res?.data?.objectKoinot));
+  return response.data;
+};
+
+export const getStaticsGraphProduct = async (setUser) => {
+  const response = await axios
+    .get(
+      `${API_BASE_URL}/statistics/v1/user-product?from=2023-08-01&till=2023-08-30&user=false`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
+        },
+      }
+    )
+    .then((res) => setUser(res?.data?.objectKoinot));
+  return response.data;
+};
+
+export const getStaticsGraphData = async (setUser) => {
+  const response = await axios
+    .get(
+      `${API_BASE_URL}/statistics/v1/product-seen?from=2023-08-01&till=2023-08-30`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
+        },
+      }
+    )
+    .then((res) => setUser(res?.data?.objectKoinot));
+  return response.data;
+};
+
 export const getEmailData = async () => {
   const response = await axios.get(`${API_BASE_URL}/email/v1??page=0&size=40`, {
     headers: {
