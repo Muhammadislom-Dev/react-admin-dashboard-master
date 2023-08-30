@@ -65,8 +65,12 @@ function EditModal({ data }) {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">Add</Button>
+            <Button sx={{ color: "#fff" }} onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button sx={{ color: "#fff" }} type="submit">
+              Add
+            </Button>
           </DialogActions>
         </form>
       </Dialog>

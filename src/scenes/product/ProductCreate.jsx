@@ -63,7 +63,7 @@ export default function ProductCreate({ refetch, edit }) {
           <DialogContent>
             <div>
               <label style={{ marginBottom: "10px" }} htmlFor="">
-                 Bu mahsulot tasdiqlansinmi?
+                Bu mahsulot tasdiqlansinmi?
               </label>
               <Select
                 sx={{ width: 550, marginBottom: "10px" }}
@@ -91,7 +91,7 @@ export default function ProductCreate({ refetch, edit }) {
             </div>
             <div>
               <label style={{ marginBottom: "10px" }} htmlFor="">
-                 Kanaldan o'chirilsinmi?
+                Kanaldan o'chirilsinmi?
               </label>
               <Select
                 sx={{ width: 550, marginBottom: "10px" }}
@@ -105,8 +105,10 @@ export default function ProductCreate({ refetch, edit }) {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">
+            <Button sx={{ color: "#fff" }} onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button sx={{ color: "#fff" }} type="submit">
               {isLoading ? "Yuklanmoqda..." : "Add"}
             </Button>
           </DialogActions>

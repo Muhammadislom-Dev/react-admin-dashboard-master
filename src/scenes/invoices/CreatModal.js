@@ -90,8 +90,7 @@ export default function CreateModal({ refetch }) {
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-      >
+        aria-describedby="alert-dialog-slide-description">
         <DialogTitle>{"Blog Name"}</DialogTitle>
         <form onSubmit={handleSubmit}>
           <DialogContent>
@@ -101,8 +100,7 @@ export default function CreateModal({ refetch }) {
                 alignItems: "center",
                 marginBottom: "10px",
                 justifyContent: "space-between",
-              }}
-            >
+              }}>
               <input
                 id="image-input"
                 className="form-control"
@@ -149,8 +147,7 @@ export default function CreateModal({ refetch }) {
                 alignItems: "center",
                 marginBottom: "10px",
                 justifyContent: "space-between",
-              }}
-            >
+              }}>
               <MultipleSelect
                 data={data?.objectKoinot.content}
                 setFormData={setFormData}
@@ -160,8 +157,10 @@ export default function CreateModal({ refetch }) {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">
+            <Button sx={{ color: "#fff" }} onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button sx={{ color: "#fff" }} type="submit">
               {isLoading ? "Yuklanmoqda..." : "Add"}
             </Button>
           </DialogActions>

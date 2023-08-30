@@ -207,8 +207,12 @@ const UserEditModal = ({ refetch, id }) => {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">{postLoading ? "Loading..." : "Add"}</Button>
+            <Button sx={{ color: "#fff" }} onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button sx={{ color: "#fff" }} type="submit">
+              {postLoading ? "Loading..." : "Add"}
+            </Button>
           </DialogActions>
         </form>
       </Dialog>

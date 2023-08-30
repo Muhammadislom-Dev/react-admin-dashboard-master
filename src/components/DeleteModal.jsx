@@ -47,8 +47,13 @@ function DeleteModal({ data, mutate }) {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Yo'q</Button>
-            <Button onClick={handleSubmit} className="confirm-btn">
+            <Button sx={{ color: "#fff" }} onClick={handleClose}>
+              Yo'q
+            </Button>
+            <Button
+              sx={{ color: "#fff" }}
+              onClick={handleSubmit}
+              className="confirm-btn">
               Ha
             </Button>
           </DialogActions>
