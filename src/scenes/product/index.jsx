@@ -269,14 +269,16 @@ const Product = () => {
                 memberTableData?.map((worker) => (
                   <>
                     <TableRow key={worker.id}>
-                      <img
-                        src={worker.photos[0]?.filePath}
-                        height={50}
-                        width={80}
-                        style={{
-                          objectFit: "cover",
-                        }}
-                      />
+                      {worker.photos ? (
+                        <img
+                          src={worker?.photos[0]?.filePath}
+                          height={50}
+                          width={80}
+                          style={{
+                            objectFit: "cover",
+                          }}
+                        />
+                      ) : null}
                       <TableCell>{worker.name.slice(0, 25)}</TableCell>
                       <TableCell onClick={() => setNewId(worker.id)}>
                         Mahsulot tasdiqlash

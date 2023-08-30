@@ -48,20 +48,7 @@ const Users = () => {
       data?.objectKoinot.content?.slice(firstPageIndex, lastPageIndex)
     );
   }, [memberPage, data?.objectKoinot?.content]);
-  // if (singleStatisticsLoading) {
-  //   return (
-  //     <Box
-  //       display="flex"
-  //       alignItems="center"
-  //       justifyContent="center"
-  //       height={"80vh"}>
-  //       <CircularProgress
-  //         color="success"
-  //         style={{ width: "100px", height: "100px" }}
-  //       />
-  //     </Box>
-  //   );
-  // }
+
   return (
     <Box m="20px">
       <Header title="Users" subtitle="List of Invoice Balances" />
