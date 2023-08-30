@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, FormControl, MenuItem, Select } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
@@ -10,20 +10,36 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button, TableHead } from "@mui/material";
 import { useMutation, useQuery } from "react-query";
-import { deteleCategoryData, getCategoryData } from "../../api";
-import CreateModal from "./CreatModal";
-import DeleteModal from "../../components/DeleteModal";
+import {
+  deteleCategoryData,
+  getCategoryByIdData,
+  getCategoryData,
+} from "../../api";
+// import CreateModal from "./CreatModal";
+// import DeleteModal from "../../components/DeleteModal";
 import { toast } from "react-toastify";
+import { useState } from "react";
+import CreateModal from "./CreateModal";
+import DeleteModal from "../../components/DeleteModal";
 import EditModal from "./EditModal";
+// import EditModal from "./EditModal";
+// import SubCategoryData from "./SubCategory";
 
-const Contacts = () => {
+const ChildCategory = () => {
   const theme = useTheme();
+  const [subcategory, setSubCategory] = useState([]);
+  const [category, setCategory] = useState(3);
   const colors = tokens(theme.palette.mode);
-  const {
-    data,
-    isLoading: singleCompanyLoading,
-    refetch,
-  } = useQuery("categoryData", getCategoryData);
+  //   const { data, refetch } = useQuery(["paramsSubCategory", category], () =>
+  //     getCategoryByIdData(category)
+  //   );
+
+  const { data, refetch } = useQuery(
+    ["paramsSubCategory", category, setSubCategory],
+    () => getCategoryByIdData(category, setSubCategory)
+  );
+
+  const { data: categoryData } = useQuery("categoryData", getCategoryData);
 
   const { mutate } = useMutation(async (userId) => {
     return await deteleCategoryData(userId)
@@ -39,9 +55,27 @@ const Contacts = () => {
       });
   });
 
+  console.log(subcategory);
+
   return (
     <Box m="20px">
-      <Header title="Kategoriyalar" />
+      <Header title="Sub Kategoriyalar" />
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        Kategoriyalar
+        <FormControl sx={{ width: 300, border: "2px solid gray" }}>
+          <Select
+            labelId="demo-multiple-checkbox-label"
+            id="demo-multiple-checkbox"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}>
+            {categoryData?.objectKoinot?.map((evt, index) => (
+              <MenuItem key={index} value={evt.id}>
+                {evt.nameUz}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -88,13 +122,13 @@ const Contacts = () => {
                   </b>
                 </TableCell>
                 <TableCell align="right">
-                  <CreateModal refetch={refetch} />
+                  <CreateModal category={category} refetch={refetch} />
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data?.objectKoinot?.length > 0 &&
-                data?.objectKoinot.map((worker) => (
+              {subcategory?.objectKoinot?.children?.length > 0 &&
+                subcategory?.objectKoinot?.children?.map((worker) => (
                   <TableRow key={worker.id}>
                     <TableCell>{worker.nameUz}</TableCell>
                     <TableCell>{worker.nameRu}</TableCell>
@@ -106,7 +140,11 @@ const Contacts = () => {
                           justifyContent: "flex-end",
                         }}>
                         <DeleteModal mutate={mutate} data={worker?.id} />
-                        <EditModal data={worker.id} />
+                        <EditModal
+                          refetch={refetch}
+                          category={category}
+                          data={worker.id}
+                        />
                       </div>
                     </TableCell>
                   </TableRow>
@@ -119,4 +157,4 @@ const Contacts = () => {
   );
 };
 
-export default Contacts;
+export default ChildCategory;

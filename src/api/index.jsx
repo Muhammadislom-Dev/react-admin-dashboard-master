@@ -71,9 +71,9 @@ export const postTelegramData = async (active, newId) => {
   return response.data;
 };
 
-export const getUserData = async (formData) => {
+export const getUserData = async (formData, search) => {
   const response = await axios.get(
-    `${API_BASE_URL}/user/v1?page=0&role=${formData}&size=100`,
+    `${API_BASE_URL}/user/v1?page=0&role=${formData}&search=${search}&size=1000`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
@@ -186,6 +186,17 @@ export const getCategoryData = async () => {
     },
   });
   return response.data;
+};
+
+export const getCategoryByIdData = async (category, setSubCategory) => {
+  const response = await axios
+    .get(`${API_BASE_URL}/category/v1/${category}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
+      },
+    })
+    .then((res) => setSubCategory(res.data));
+  return response?.data;
 };
 
 export const getEmailData = async () => {

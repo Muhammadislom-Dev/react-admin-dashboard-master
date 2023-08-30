@@ -11,6 +11,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
 } from "@mui/material";
 import React from "react";
 import Header from "../../components/Header";
@@ -27,6 +28,7 @@ import UserEditModal from "./UserEditModal";
 
 const Users = () => {
   const theme = useTheme();
+  const [search, setSearch] = useState("");
   const [formData, setFormData] = React.useState("ROLE_USER");
   const [memberPage, setMemberPage] = useState(1);
   const colors = tokens(theme.palette.mode);
@@ -34,7 +36,9 @@ const Users = () => {
     data,
     isLoading: singleStatisticsLoading,
     refetch,
-  } = useQuery(["paramsDataUser", formData], () => getUserData(formData));
+  } = useQuery(["paramsDataUser", formData, search], () =>
+    getUserData(formData, search)
+  );
 
   const memberTableData = useMemo(() => {
     const firstPageIndex = (memberPage - 1) * PAGE_SIZE;
@@ -44,24 +48,24 @@ const Users = () => {
       data?.objectKoinot.content?.slice(firstPageIndex, lastPageIndex)
     );
   }, [memberPage, data?.objectKoinot?.content]);
-  if (singleStatisticsLoading) {
-    return (
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        height={"80vh"}>
-        <CircularProgress
-          color="success"
-          style={{ width: "100px", height: "100px" }}
-        />
-      </Box>
-    );
-  }
+  // if (singleStatisticsLoading) {
+  //   return (
+  //     <Box
+  //       display="flex"
+  //       alignItems="center"
+  //       justifyContent="center"
+  //       height={"80vh"}>
+  //       <CircularProgress
+  //         color="success"
+  //         style={{ width: "100px", height: "100px" }}
+  //       />
+  //     </Box>
+  //   );
+  // }
   return (
     <Box m="20px">
       <Header title="Users" subtitle="List of Invoice Balances" />
-      <Box>
+      <Box sx={{ display: "flex", alignItems: "center" }}>
         <FormControl sx={{ width: 300, border: "2px solid gray" }}>
           <Select
             labelId="demo-multiple-checkbox-label"
@@ -74,6 +78,12 @@ const Users = () => {
             <MenuItem value="ROLE_SUPPER_ADMIN">ROLE_SUPPER_ADMIN</MenuItem>
           </Select>
         </FormControl>
+        <TextField
+          placeholder="Search..."
+          sx={{ border: "2px solid gray", marginLeft: "35px", width: "500px" }}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </Box>
       <Box
         m="40px 0 0 0"

@@ -31,7 +31,9 @@ function DeleteModal({ data, mutate }) {
   };
   return (
     <div>
-      <Button variant="contain" onClick={handleOpen}>Delete</Button>
+      <Button variant="contain" color="primary" onClick={handleOpen}>
+        Delete
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}

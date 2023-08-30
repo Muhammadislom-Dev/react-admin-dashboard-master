@@ -22,8 +22,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function CreateCategory() {
   const [open, setOpen] = React.useState(false);
-  const [image, setImage] = React.useState("");
-  const [selectedFile, setSelectedFile] = React.useState(null);
   const [formData, setFormData] = React.useState({
     nameRu: "",
     nameUz: "",

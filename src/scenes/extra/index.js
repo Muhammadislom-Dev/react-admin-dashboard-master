@@ -19,10 +19,11 @@ export const fileUploadFunc = async ({ data, setFormData }) => {
 export const userPostFunc = async ({ data, refetch, handleClose }) => {
   return await API.postUserData(data)
     .then((res) => {
-      console.log(res.data);
+      if (res.status === 200) {
+        handleClose();
+        toast.success("Foydalanuvchi muvofaqiyatli yaratildi");
+      }
       refetch();
-      handleClose();
-      toast.success("Foydalanuvchi muvofaqiyatli yaratildi");
     })
     .catch((err) => {
       if (

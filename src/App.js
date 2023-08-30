@@ -13,6 +13,7 @@ import Login from "./components/Login";
 import Users from "./scenes/users/Users";
 import SubCategory from "./scenes/subcategory";
 import Product from "./scenes/product";
+import ChildCategory from "./scenes/childcategory";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -36,6 +37,7 @@ function App() {
                 <Route path="/users" element={<Users />} />
                 <Route path="/category" element={<SubCategory />} />
                 <Route path="/product" element={<Product />} />
+                <Route path="/subcategory" element={<ChildCategory />} />
               </Routes>
             </main>
           </div>

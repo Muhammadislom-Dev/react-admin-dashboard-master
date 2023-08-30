@@ -6,7 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { TextField } from "@mui/material";
-import { API } from "../../api";
+import { API, postTagData } from "../../api";
 import { useMutation } from "react-query";
 import { toast } from "react-toastify";
 
@@ -14,16 +14,16 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function SubCategoryData({ data }) {
+export default function EditModal({ refetch, category, data }) {
   const [open, setOpen] = React.useState(false);
-  console.log(data)
   const [formData, setFormData] = React.useState({
     nameRu: "",
     nameUz: "",
-    parentCategory: data,
-    photoId: null,
     icon: null,
+    parentCategory: category,
     iconInSelect: null,
+    id: data,
+    photoId: null,
   });
   const handleClickOpen = () => {
     setOpen(true);
@@ -33,10 +33,13 @@ export default function SubCategoryData({ data }) {
     async (payload) => {
       return await API.postCategoryData(payload)
         .then((res) => {
-          toast.success("SubCategory muvafaqiyatli tahrirlandi!");
+          console.log(res.data);
+          toast.success("SubCategory muvafaqiyatli yaratildi");
+          refetch();
           handleClose();
         })
         .catch((err) => {
+          console.log(err);
           toast.danger("SubCategory yaratilmadi qaytadan urinib ko'ring");
         });
     }
@@ -53,14 +56,13 @@ export default function SubCategoryData({ data }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-    postCategoryMutate({ ...formData, parentCategory: null });
+    postCategoryMutate({ ...formData });
   };
 
   return (
     <div>
       <Button variant="contained" color="primary" onClick={handleClickOpen}>
-        Create SubCategory
+        Edit
       </Button>
       <Dialog
         open={open}
@@ -68,7 +70,7 @@ export default function SubCategoryData({ data }) {
         keepMounted
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description">
-        <DialogTitle>{"Category Name"}</DialogTitle>
+        <DialogTitle>{"SubCategory Name"}</DialogTitle>
         <form onSubmit={handleSubmit}>
           <DialogContent>
             <div>
