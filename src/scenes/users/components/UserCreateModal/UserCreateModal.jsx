@@ -207,10 +207,10 @@ const UserCreateModal = ({ refetch }) => {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button sx={{ color: "#fff" }} onClick={handleClose}>
+            <Button variant="contain" color="primary" onClick={handleClose}>
               Cancel
             </Button>
-            <Button sx={{ color: "#fff" }} type="submit">
+            <Button variant="contain" color="primary" type="submit">
               {postLoading ? "Loading..." : "Add"}
             </Button>
           </DialogActions>

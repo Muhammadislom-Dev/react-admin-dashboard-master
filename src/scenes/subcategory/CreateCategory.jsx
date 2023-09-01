@@ -125,10 +125,10 @@ export default function CreateCategory() {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button sx={{ color: "#fff" }} onClick={handleClose}>
+            <Button variant="contain" color="primary" onClick={handleClose}>
               Cancel
             </Button>
-            <Button sx={{ color: "#fff" }} type="submit">
+            <Button variant="contain" color="primary" type="submit">
               {isLoading ? "Yuklanmoqda..." : "Add"}
             </Button>
           </DialogActions>

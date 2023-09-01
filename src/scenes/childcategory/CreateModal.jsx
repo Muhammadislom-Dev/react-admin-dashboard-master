@@ -94,8 +94,10 @@ export default function CreateModal({ refetch, category }) {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button  sx={{ color: "#fff" }} onClick={handleClose}>Cancel</Button>
-            <Button  sx={{ color: "#fff" }} type="submit">
+            <Button variant="contain" color="primary" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button variant="contain" color="primary" type="submit">
               {isLoading ? "Yuklanmoqda..." : "Add"}
             </Button>
           </DialogActions>
