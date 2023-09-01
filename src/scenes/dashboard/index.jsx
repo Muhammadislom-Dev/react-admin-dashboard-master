@@ -1,4 +1,4 @@
-import { Box, Button, Typography, useTheme } from "@mui/material";
+import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import React from "react";
 import Header from "../../components/Header";
@@ -13,13 +13,15 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { format } from "date-fns";
 
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { data } = useQuery("static", getStaticsData);
-  const [valueOne, setValueOne] = React.useState(dayjs("2023-04-17"));
-  const [value, setValue] = React.useState(dayjs("2023-04-17"));
+  const [valueOne, setValueOne] = React.useState("");
+  const [value, setValue] = React.useState("");
+
   return (
     <Box
       sx={{
@@ -50,20 +52,30 @@ const Dashboard = () => {
       m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={["DatePicker", "DatePicker"]}>
-            <DatePicker
-              label="Start date"
-              value={valueOne}
-              onChange={(newValue) => setValueOne(newValue)}
-            />
-            <DatePicker
-              label="Finish date"
-              value={value}
-              onChange={(newValue) => setValue(newValue)}
-            />
-          </DemoContainer>
-        </LocalizationProvider>
+        <Box sx={{ display: "flex", alignItems: "center", gap: "15px" }}>
+          <input
+            type="date"
+            onChange={(e) => setValue(e.target.value)}
+            value={value}
+            style={{
+              padding: "10px 18px",
+              border: "1px solid #fff",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          />
+          <input
+            type="date"
+            onChange={(e) => setValueOne(e.target.value)}
+            value={valueOne}
+            style={{
+              padding: "10px 18px",
+              border: "1px solid #fff",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          />
+        </Box>
       </Box>
 
       {/* GRID & CHARTS */}
@@ -164,10 +176,10 @@ const Dashboard = () => {
           </Box>
         </Box>
         <Box sx={{ height: "80vh", overflowY: "auto" }}>
-          <LineChartUser />
-          <LineChartProduct />
-          <LineChart />
-          <LineChartPhone />
+          <LineChartUser value={value} valueOne={valueOne} />
+          <LineChartProduct value={value} valueOne={valueOne} />
+          <LineChart value={value} valueOne={valueOne} />
+          <LineChartPhone value={value} valueOne={valueOne} />
         </Box>
       </Box>
     </Box>

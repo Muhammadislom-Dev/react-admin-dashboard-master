@@ -199,10 +199,10 @@ export const getCategoryByIdData = async (category, setSubCategory) => {
   return response?.data;
 };
 
-export const getStaticsGraph = async (setUser) => {
+export const getStaticsGraph = async (value, valueOne, setUser) => {
   const response = await axios
     .get(
-      `${API_BASE_URL}/statistics/v1/user-product?from=2023-08-01&till=2023-08-30&user=true`,
+      `${API_BASE_URL}/statistics/v1/user-product?from=${value}&till=${valueOne}&user=true`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
@@ -213,10 +213,10 @@ export const getStaticsGraph = async (setUser) => {
   return response.data;
 };
 
-export const getStaticsGraphProduct = async (setUser) => {
+export const getStaticsGraphProduct = async (value, valueOne, setUser) => {
   const response = await axios
     .get(
-      `${API_BASE_URL}/statistics/v1/user-product?from=2023-08-01&till=2023-08-30&user=false`,
+      `${API_BASE_URL}/statistics/v1/user-product?from=${value}&till=${valueOne}&user=false`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
@@ -227,10 +227,10 @@ export const getStaticsGraphProduct = async (setUser) => {
   return response.data;
 };
 
-export const getStaticsGraphData = async (setUser) => {
+export const getStaticsGraphData = async (value, valueOne, setUser) => {
   const response = await axios
     .get(
-      `${API_BASE_URL}/statistics/v1/product-seen?from=2023-08-01&till=2023-08-30`,
+      `${API_BASE_URL}/statistics/v1/product-seen?from=${value}&till=${valueOne}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,

@@ -6,10 +6,11 @@ import { getStaticsGraph, getStaticsGraphProduct } from "../../api";
 import { useState } from "react";
 import { useEffect } from "react";
 
-const LineChartProduct = () => {
+const LineChartProduct = ({ value, valueOne }) => {
   const [user, setUser] = useState([]);
-  const { data: lineGraph } = useQuery(["lineGraphProduct", setUser], () =>
-    getStaticsGraphProduct(setUser)
+  const { data: lineGraph } = useQuery(
+    ["lineGraphProduct", value, valueOne, setUser],
+    () => getStaticsGraphProduct(value, valueOne, setUser)
   );
   let newTimeArray = [];
   let newCountsArray = [];

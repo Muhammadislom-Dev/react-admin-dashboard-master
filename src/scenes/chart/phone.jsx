@@ -3,11 +3,11 @@ import { Line } from "react-chartjs-2";
 import { getStaticsGraphData } from "../../api";
 import { useQuery } from "react-query";
 
-const LineChartPhone = () => {
+const LineChartPhone = ({ value, valueOne }) => {
   const [user, setUser] = useState([]);
   const { data: lineGraph, isLoading } = useQuery(
-    ["lineGraphDataOne", setUser],
-    () => getStaticsGraphData(setUser)
+    ["lineGraphDataOne", value, valueOne, setUser],
+    () => getStaticsGraphData(value, valueOne, setUser)
   );
 
   let newTimeArray = [];
