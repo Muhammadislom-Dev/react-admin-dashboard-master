@@ -38,7 +38,7 @@ const LineChartPhone = ({ value, valueOne }) => {
 
   return (
     <>
-      <h3>Get Product for PhoneNumber by the Statistics</h3>
+      <h3>Telefon raqam ko'rishlar soni</h3>
       <div style={{ width: "700px", margin: "25px 0", paddingBottom: "80px" }}>
         <Line data={data} />
       </div>

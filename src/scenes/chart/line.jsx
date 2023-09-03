@@ -37,7 +37,7 @@ const LineChartUser = ({ value, valueOne }) => {
   };
   return (
     <>
-      <h3>Users register statics</h3>
+      <h3>Ro'yhatdan o'tkanlar soni</h3>
       <div style={{ width: "700px", margin: "25px 0", paddingBottom: "80px" }}>
         <Line data={data} />
       </div>

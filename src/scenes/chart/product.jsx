@@ -38,7 +38,7 @@ const LineChartProduct = ({ value, valueOne }) => {
   };
   return (
     <>
-      <h3>Product Create Statics</h3>
+      <h3>  Mahsulotlar Soni</h3>
       <div style={{ width: "700px", margin: "25px 0", paddingBottom: "80px" }}>
         <Line data={data} />
       </div>

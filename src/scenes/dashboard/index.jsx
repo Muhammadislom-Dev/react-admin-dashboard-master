@@ -8,19 +8,13 @@ import LineChart from "../chart";
 import LineChartUser from "../chart/line";
 import LineChartPhone from "../chart/phone";
 import LineChartProduct from "../chart/product";
-import dayjs from "dayjs";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { format } from "date-fns";
 
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { data } = useQuery("static", getStaticsData);
-  const [valueOne, setValueOne] = React.useState("");
-  const [value, setValue] = React.useState("");
+  const [valueOne, setValueOne] = React.useState("2023-09-30");
+  const [value, setValue] = React.useState("2023-09-01");
 
   return (
     <Box
