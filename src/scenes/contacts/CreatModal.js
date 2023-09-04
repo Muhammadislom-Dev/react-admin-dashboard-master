@@ -20,7 +20,7 @@ export default function CreateModal({ refetch }) {
   const [formData, setFormData] = React.useState({
     nameRu: "",
     nameUz: "",
-    icon: "",
+    iconInSelect: "",
   });
   const handleClickOpen = () => {
     setOpen(true);
@@ -30,13 +30,11 @@ export default function CreateModal({ refetch }) {
     async (payload) => {
       return await API.postCategoryData(payload)
         .then((res) => {
-          console.log(res.data);
           toast.success("Category muvafaqiyatli yaratildi");
           refetch();
           handleClose();
         })
         .catch((err) => {
-          console.log(err);
           toast.danger("Categorys yaratilmadi qaytadan urinib ko'ring");
         });
     }
@@ -98,9 +96,9 @@ export default function CreateModal({ refetch }) {
               <TextField
                 sx={{ width: 550, marginBottom: "10px" }}
                 label="Icon code"
-                name="icon"
+                name="iconInSelect"
                 required
-                value={formData.icon}
+                value={formData.iconInSelect}
                 onChange={handleChange}
               />
             </div>

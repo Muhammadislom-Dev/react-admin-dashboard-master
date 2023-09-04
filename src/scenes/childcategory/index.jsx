@@ -30,10 +30,6 @@ const ChildCategory = () => {
   const [subcategory, setSubCategory] = useState([]);
   const [category, setCategory] = useState(3);
   const colors = tokens(theme.palette.mode);
-  //   const { data, refetch } = useQuery(["paramsSubCategory", category], () =>
-  //     getCategoryByIdData(category)
-  //   );
-
   const { data, refetch } = useQuery(
     ["paramsSubCategory", category, setSubCategory],
     () => getCategoryByIdData(category, setSubCategory)
@@ -54,8 +50,6 @@ const ChildCategory = () => {
         console.log("Xatolik yuzberdi delete qilishda!");
       });
   });
-
-  console.log(subcategory);
 
   return (
     <Box m="20px">
