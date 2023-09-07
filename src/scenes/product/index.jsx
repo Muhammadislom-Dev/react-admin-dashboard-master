@@ -5,7 +5,6 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
-  OutlinedInput,
   Select,
 } from "@mui/material";
 import { tokens } from "../../theme";
@@ -30,19 +29,16 @@ import {
 } from "../../api";
 import DeleteModal from "../../components/DeleteModal";
 import { toast } from "react-toastify";
-import ProductCreate from "./ProductCreate";
 import { useMemo } from "react";
 import { PAGE_SIZE } from "../team";
 import { useState } from "react";
 import Pagination from "../../components/Pagination";
 
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
 const Product = () => {
   const [memberPage, setMemberPage] = useState(1);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [accepted, setAccepted] = useState("");
-  const [search, setSearch] = useState("");
   const [district, setDistrict] = useState("");
   const [region, setRegion] = useState("");
   const [category, setCategory] = useState("");

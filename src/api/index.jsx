@@ -149,12 +149,15 @@ export const getTagData = async () => {
   return response.data;
 };
 
-export const getStaticsData = async () => {
-  const response = await axios.get(`${API_BASE_URL}/statistics/v1/overall`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
-    },
-  });
+export const getStaticsData = async (value, valueOne) => {
+  const response = await axios.get(
+    `${API_BASE_URL}/statistics/v1/overall?from=${value}&till=${valueOne}`,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
+      },
+    }
+  );
   return response.data;
 };
 
