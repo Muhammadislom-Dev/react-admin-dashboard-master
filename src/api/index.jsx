@@ -39,10 +39,10 @@ export const API = {
   // getStaticsData: (payload) => axiosInstance.get("/adminVariables/v1", payload),
 };
 
-export const postActiveData = async (active, newId) => {
+export const postActiveData = async (newId) => {
   const response = await axios
     .post(
-      `${API_BASE_URL}/product/v1/control/${newId}?accepted=${active}&deleteInTelegram&top`
+      `${API_BASE_URL}/product/v1/control/${newId}?accepted=true&deleteInTelegram&top`
     )
     .then((res) => {
       console.log(res.data);
@@ -54,6 +54,22 @@ export const postActiveData = async (active, newId) => {
     });
   return response.data;
 };
+
+// export const postActiveDataFalse = async (newId) => {
+//   const response = await axios
+//     .post(
+//       `${API_BASE_URL}/product/v1/control/${newId}?accepted=true&deleteInTelegram&top`
+//     )
+//     .then((res) => {
+//       console.log(res.data);
+//       toast.success("Mahsulot muvaffaqiyatli tasdiqlandi!");
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       toast.error("Sizda xatolik yuzaga keldi!");
+//     });
+//   return response.data;
+// };
 
 export const postTelegramData = async (active, newId) => {
   const response = await axios
@@ -255,7 +271,7 @@ export const getEmailData = async () => {
 
 export const getProductData = async (accepted, category, district, region) => {
   const response = await axios.get(
-    `${API_BASE_URL}/product/v1?accepted=${accepted}&category=${category}&district=${district}&page=0&region=${region}&size=1000`,
+    `${API_BASE_URL}/product/v1?productStatus=${accepted}&category=${category}&district=${district}&page=0&region=${region}&size=1000`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,

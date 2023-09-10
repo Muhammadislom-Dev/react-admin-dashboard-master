@@ -25,6 +25,7 @@ import {
   getCategory,
   getProductData,
   postActiveData,
+  postActiveDataFalse,
   postTelegramData,
 } from "../../api";
 import DeleteModal from "../../components/DeleteModal";
@@ -84,9 +85,8 @@ const Product = () => {
   const [activeStates, setActiveStates] = useState({});
   const active = activeStates?.isToggled;
 
-  const { mutate: activeMutate } = useMutation(
-    ["statusParams", active, newId],
-    () => postActiveData(active, newId)
+  const { mutate: activeMutate } = useMutation(["statusParams", newId], () =>
+    postActiveData(newId)
   );
 
   const { mutate: TelegramMutate } = useMutation(
@@ -102,11 +102,7 @@ const Product = () => {
     TelegramMutate();
   };
 
-  const handleToggle = (id) => {
-    const updatedActiveStates = {
-      isToggled: !activeStates[id]?.isToggled,
-    };
-    setActiveStates(updatedActiveStates);
+  const handleToggle = () => {
     activeMutate();
   };
 
@@ -141,8 +137,9 @@ const Product = () => {
               id="demo-multiple-name"
               value={accepted}
               onChange={(e) => setAccepted(e.target.value)}>
-              <MenuItem value={true}>Tasdiqlangan mahsulotlar</MenuItem>
-              <MenuItem value={false}>Tasdiqlanmagan mahsulotlar</MenuItem>
+              <MenuItem value="ACCEPTED">Tasdiqlangan mahsulotlar</MenuItem>
+              <MenuItem value="REJECTED">Tasdiqlanmagan mahsulotlar</MenuItem>
+              <MenuItem value="EDITED">O'zgartirilgan mahsulotlar</MenuItem>
             </Select>
           </FormControl>
         </div>
@@ -275,15 +272,10 @@ const Product = () => {
                           }}
                         />
                       ) : null}
-                      <TableCell>{worker.name.slice(0, 25)}</TableCell>
-                      <TableCell onClick={() => setNewId(worker.id)}>
+                      <TableCell>{worker?.name?.slice(0, 25)}</TableCell>
+                      <TableCell onClick={() => setNewId(worker?.id)}>
                         Mahsulot tasdiqlash
-                        <Checkbox
-                          checked={activeStates[worker.id]?.isToggled}
-                          onChange={() => {
-                            handleToggle(worker.id);
-                          }}
-                        />
+                        <Checkbox onChange={handleToggle} />
                       </TableCell>
                       <TableCell onClick={() => setNewId(worker.id)}>
                         Telegram kanal yuborilsinmi?
