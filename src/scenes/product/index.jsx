@@ -24,9 +24,6 @@ import {
   fetchRegionData,
   getCategory,
   getProductData,
-  postActiveData,
-  postActiveDataFalse,
-  postTelegramData,
 } from "../../api";
 import DeleteModal from "../../components/DeleteModal";
 import { toast } from "react-toastify";
@@ -34,6 +31,8 @@ import { useMemo } from "react";
 import { PAGE_SIZE } from "../team";
 import { useState } from "react";
 import Pagination from "../../components/Pagination";
+import CheckboxData from "./Checkbox";
+import Telegram from "./Telegram";
 
 const Product = () => {
   const [memberPage, setMemberPage] = useState(1);
@@ -81,30 +80,6 @@ const Product = () => {
       product?.content?.slice(firstPageIndex, lastPageIndex)
     );
   }, [memberPage, product?.content]);
-  const [newId, setNewId] = useState("");
-  const [activeStates, setActiveStates] = useState({});
-  const active = activeStates?.isToggled;
-
-  const { mutate: activeMutate } = useMutation(["statusParams", newId], () =>
-    postActiveData(newId)
-  );
-
-  const { mutate: TelegramMutate } = useMutation(
-    ["telegramData", active, newId],
-    () => postTelegramData(active, newId)
-  );
-
-  const handleTelegramToogle = (id) => {
-    const updatedActiveStates = {
-      isToggled: !activeStates[id]?.isToggled,
-    };
-    setActiveStates(updatedActiveStates);
-    TelegramMutate();
-  };
-
-  const handleToggle = () => {
-    activeMutate();
-  };
 
   if (isLoading) {
     return (
@@ -273,18 +248,11 @@ const Product = () => {
                         />
                       ) : null}
                       <TableCell>{worker?.name?.slice(0, 25)}</TableCell>
-                      <TableCell onClick={() => setNewId(worker?.id)}>
-                        Mahsulot tasdiqlash
-                        <Checkbox onChange={handleToggle} />
+                      <TableCell>
+                        <CheckboxData data={worker.id} />
                       </TableCell>
-                      <TableCell onClick={() => setNewId(worker.id)}>
-                        Telegram kanal yuborilsinmi?
-                        <Checkbox
-                          checked={activeStates[worker.id]?.isToggled}
-                          onChange={() => {
-                            handleTelegramToogle(worker.id);
-                          }}
-                        />
+                      <TableCell>
+                        <Telegram data={worker.id} />
                       </TableCell>
                       <TableCell align="right">
                         <div
