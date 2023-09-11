@@ -106,11 +106,7 @@ const Sidebar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={
-                    data?.objectKoinot?.photo === null
-                      ? AvatarIcon
-                      : data?.objectKoinot?.photo
-                  }
+                  src={AvatarIcon}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>
