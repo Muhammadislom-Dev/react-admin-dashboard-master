@@ -20,15 +20,28 @@ function Telegram({ data }) {
     TelegramMutate();
   };
   return (
-    <>
-      Telegram kanal yuborilsinmi?
+    // <>
+    //   Telegram kanal yuborilsinmi?
+    //   <Checkbox
+    //     checked={activeStates[data]?.isToggled}
+    //     onChange={() => {
+    //       handleTelegramToogle(data);
+    //     }}
+    //   />
+    // </>
+    <div style={{ display: "flex", alignItems: "center", gap: "25px" }}>
+      <h3 style={{ color: "black", marginTop: "0" }}>
+        {" "}
+        Mahsulot bekor qilish
+      </h3>
       <Checkbox
+        style={{ color: "black", marginBottom: "15px" }}
         checked={activeStates[data]?.isToggled}
         onChange={() => {
           handleTelegramToogle(data);
         }}
       />
-    </>
+    </div>
   );
 }
 

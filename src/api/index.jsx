@@ -41,9 +41,7 @@ export const API = {
 
 export const postActiveData = async (newId) => {
   const response = await axios
-    .post(
-      `${API_BASE_URL}/product/v1/control/${newId}?accepted=true&deleteInTelegram&top`
-    )
+    .post(`${API_BASE_URL}/product/v1/control/${newId}?status=ACCEPTED`)
     .then((res) => {
       console.log(res.data);
       toast.success("Mahsulot muvaffaqiyatli tasdiqlandi!");
@@ -55,30 +53,12 @@ export const postActiveData = async (newId) => {
   return response.data;
 };
 
-// export const postActiveDataFalse = async (newId) => {
-//   const response = await axios
-//     .post(
-//       `${API_BASE_URL}/product/v1/control/${newId}?accepted=true&deleteInTelegram&top`
-//     )
-//     .then((res) => {
-//       console.log(res.data);
-//       toast.success("Mahsulot muvaffaqiyatli tasdiqlandi!");
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//       toast.error("Sizda xatolik yuzaga keldi!");
-//     });
-//   return response.data;
-// };
-
-export const postTelegramData = async (active, newId) => {
+export const postTelegramData = async (newId) => {
   const response = await axios
-    .post(
-      `${API_BASE_URL}/product/v1/control/${newId}?accepted&deleteInTelegram=${active}&top`
-    )
+    .post(`${API_BASE_URL}/product/v1/control/${newId}?status=REJECTED`)
     .then((res) => {
       console.log(res.data);
-      toast.success("Mahsulot muvaffaqiyatli telegram kanalga yuborildi!");
+      toast.success("Mahsulot muvaffaqiyatli bekor qilindi!");
     })
     .catch((err) => {
       console.log(err);
@@ -296,6 +276,17 @@ export const deteleProductData = async (id) => {
       Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
     },
   });
+  return response.data;
+};
+
+export const getByIdProductData = async (data, setProduct) => {
+  const response = await axios
+    .get(`${API_BASE_URL}/product/v1/${data}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
+      },
+    })
+    .then((res) => setProduct(res.data));
   return response.data;
 };
 

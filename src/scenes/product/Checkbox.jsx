@@ -11,10 +11,13 @@ function CheckboxData({ data }) {
     activeMutate();
   };
   return (
-    <>
-      Mahsulot tasdiqlash
-      <Checkbox onChange={handleToggle} />
-    </>
+    <div style={{ display: "flex", alignItems: "center", gap: "25px" }}>
+      <h3 style={{ color: "black", marginTop: "0" }}>Mahsulot tasdiqlash</h3>
+      <Checkbox
+        style={{ color: "black", marginBottom: "15px" }}
+        onChange={handleToggle}
+      />
+    </div>
   );
 }
 

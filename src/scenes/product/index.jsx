@@ -33,6 +33,8 @@ import { useState } from "react";
 import Pagination from "../../components/Pagination";
 import CheckboxData from "./Checkbox";
 import Telegram from "./Telegram";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import ProductModal from "./Modal";
 
 const Product = () => {
   const [memberPage, setMemberPage] = useState(1);
@@ -230,7 +232,7 @@ const Product = () => {
                 </TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
-                <TableCell></TableCell>
+                {/* <TableCell></TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -249,11 +251,22 @@ const Product = () => {
                         />
                       ) : null}
                       <TableCell>{worker?.name?.slice(0, 25)}</TableCell>
-                      <TableCell>
+                      {/* <TableCell>
                         <CheckboxData data={worker.id} />
                       </TableCell>
                       <TableCell>
                         <Telegram data={worker.id} />
+                      </TableCell> */}
+                      <TableCell align="right">
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "flex-end",
+                          }}>
+                          <ProductModal data={worker?.id} />
+                        </div>
+                        {/* <Telegram data={worker.id} /> */}
                       </TableCell>
                       <TableCell align="right">
                         <div
@@ -263,7 +276,6 @@ const Product = () => {
                             justifyContent: "flex-end",
                           }}>
                           <DeleteModal mutate={mutate} data={worker?.id} />
-                          {/* <ProductCreate refetch={refetch} edit={worker.id} /> */}
                         </div>
                       </TableCell>
                     </TableRow>
