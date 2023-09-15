@@ -67,6 +67,22 @@ export const postTelegramData = async (newId) => {
   return response.data;
 };
 
+export const postTelegramDataChanel = async (newId) => {
+  const response = await axios
+    .post(
+      `${API_BASE_URL}/product/v1/control/${newId}?sendTelegram=true&status=ACCEPTED`
+    )
+    .then((res) => {
+      console.log(res.data);
+      toast.success("Mahsulot muvaffaqiyatli telegram kanalga yuborildi!");
+    })
+    .catch((err) => {
+      console.log(err);
+      toast.error("Sizda xatolik yuzaga keldi!");
+    });
+  return response.data;
+};
+
 export const getUserData = async (formData, search) => {
   const response = await axios.get(
     `${API_BASE_URL}/user/v1?page=0&role=${formData}&search=${search}&size=1000`,

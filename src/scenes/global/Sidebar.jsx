@@ -18,6 +18,7 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { useQuery } from "react-query";
 import { getUserMeData } from "../../api";
 import { AvatarIcon } from "../../assets";
+import TekinMarket from './tekinmarket.jpg'
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -106,7 +107,7 @@ const Sidebar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={AvatarIcon}
+                  src={TekinMarket}
                   style={{ cursor: "pointer", borderRadius: "50%" }}
                 />
               </Box>

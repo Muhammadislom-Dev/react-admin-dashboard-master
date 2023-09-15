@@ -17,6 +17,7 @@ import Telegram from "./Telegram";
 import CheckboxData from "./Checkbox";
 import axios from "axios";
 import { useEffect } from "react";
+import TelegramChanel from "./Chanel";
 
 const style = {
   position: "absolute",
@@ -92,6 +93,7 @@ function ProductModal({ data }) {
 
             <Telegram data={data} />
             <CheckboxData data={data} />
+            <TelegramChanel data={data} />
           </div>
         </Box>
       </Modal>

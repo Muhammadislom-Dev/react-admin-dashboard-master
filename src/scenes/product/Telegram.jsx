@@ -7,16 +7,11 @@ import { useState } from "react";
 function Telegram({ data }) {
   const [activeStates, setActiveStates] = useState({});
   const active = activeStates?.isToggled;
-  const { mutate: TelegramMutate } = useMutation(
-    ["telegramData", active, data],
-    () => postTelegramData(active, data)
+  const { mutate: TelegramMutate } = useMutation(["telegramData", data], () =>
+    postTelegramData(data)
   );
 
   const handleTelegramToogle = (id) => {
-    const updatedActiveStates = {
-      isToggled: !activeStates[id]?.isToggled,
-    };
-    setActiveStates(updatedActiveStates);
     TelegramMutate();
   };
   return (
@@ -30,13 +25,9 @@ function Telegram({ data }) {
     //   />
     // </>
     <div style={{ display: "flex", alignItems: "center", gap: "25px" }}>
-      <h3 style={{ color: "black", marginTop: "0" }}>
-        {" "}
-        Mahsulot bekor qilish
-      </h3>
+      <h3 style={{ color: "black", marginTop: "0" }}> Mahsulot bekor qilish</h3>
       <Checkbox
         style={{ color: "black", marginBottom: "15px" }}
-        checked={activeStates[data]?.isToggled}
         onChange={() => {
           handleTelegramToogle(data);
         }}
