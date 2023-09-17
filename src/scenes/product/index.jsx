@@ -115,7 +115,7 @@ const Product = () => {
               value={accepted}
               onChange={(e) => setAccepted(e.target.value)}>
               <MenuItem value="ACCEPTED">Tasdiqlangan mahsulotlar</MenuItem>
-              <MenuItem value="REJECTED">Tasdiqlanmagan mahsulotlar</MenuItem>
+              <MenuItem value="REJECTED">Bekor qilingan mahsulotlar</MenuItem>
               <MenuItem value="EDITED">O'zgartirilgan mahsulotlar</MenuItem>
               <MenuItem value="CREATED">Yaratilgan mahsulotlar</MenuItem>
             </Select>

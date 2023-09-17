@@ -20,6 +20,7 @@ function App() {
   const [isSidebar, setIsSidebar] = useState(true);
   const token = localStorage.getItem("tekin_market_token");
 
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       {token ? (
