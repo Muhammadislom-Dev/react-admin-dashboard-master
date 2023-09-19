@@ -32,7 +32,10 @@ export default function CreateModal({ refetch, category }) {
     async (payload) => {
       return await API.postCategoryData(payload)
         .then((res) => {
-          console.log(res.data);
+          setFormData({
+            nameUz: "",
+            nameRu: "",
+          });
           toast.success("SubCategory muvafaqiyatli yaratildi");
           refetch();
           handleClose();

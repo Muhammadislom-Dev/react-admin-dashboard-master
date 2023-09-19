@@ -32,14 +32,12 @@ export default function CreateCategory() {
   };
   const {
     data,
-    isLoading: singleCompanyLoading,
     refetch,
   } = useQuery("categoryData", getCategoryData);
   const { mutate: postCategoryMutate, isLoading } = useMutation(
     async (payload) => {
       return await API.postCategoryData(payload)
         .then((res) => {
-          console.log(res.data);
           toast.success("Category muvafaqiyatli yaratildi");
           refetch();
           handleClose();

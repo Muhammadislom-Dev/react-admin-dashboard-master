@@ -35,6 +35,7 @@ import CheckboxData from "./Checkbox";
 import Telegram from "./Telegram";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ProductModal from "./Modal";
+import TimePicker from "./TimePicker";
 
 const Product = () => {
   const [memberPage, setMemberPage] = useState(1);
@@ -95,8 +96,6 @@ const Product = () => {
       product?.content?.slice(firstPageIndex, lastPageIndex)
     );
   }, [memberPage, product?.content]);
-
-  console.log(memberTableData);
 
   if (isLoading) {
     return (
@@ -275,6 +274,7 @@ const Product = () => {
                     <i>Name Uz</i>
                   </b>
                 </TableCell>
+                <TableCell>Creat Time</TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
               </TableRow>
@@ -295,12 +295,10 @@ const Product = () => {
                         />
                       ) : null}
                       <TableCell>{worker?.name?.slice(0, 25)}</TableCell>
-                      {/* <TableCell>
-                        <CheckboxData data={worker.id} />
-                      </TableCell>
                       <TableCell>
-                        <Telegram data={worker.id} />
-                      </TableCell> */}
+                        {" "}
+                        <TimePicker date={worker.uploadedAt} />{" "}
+                      </TableCell>
                       <TableCell align="right">
                         <div
                           style={{
@@ -310,7 +308,6 @@ const Product = () => {
                           }}>
                           <ProductModal data={worker?.id} />
                         </div>
-                        {/* <Telegram data={worker.id} /> */}
                       </TableCell>
                       <TableCell align="right">
                         <div
