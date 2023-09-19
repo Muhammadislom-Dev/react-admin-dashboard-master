@@ -333,3 +333,35 @@ export const getBlogPostData = async () => {
   );
   return response.data;
 };
+
+export const productActivePost = async (data, active) => {
+  const response = await axios
+    .post(`${API_BASE_URL}/product/v1/control/${data}?top=${active}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
+      },
+    })
+    .then((res) => {
+      toast.success("Product muvaffaqiyatli topdan tushurildi");
+    })
+    .catch((err) => {
+      toast.error("Iltimos qaytadan urinib ko'ring");
+    });
+  return response.data;
+};
+
+export const productActivePostFalse = async (data) => {
+  const response = await axios
+    .post(`${API_BASE_URL}/product/v1/control/${data}?top=true`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
+      },
+    })
+    .then((res) => {
+      toast.success("Product muvaffaqiyatli topga ko'tarildi");
+    })
+    .catch((err) => {
+      toast.error("Iltimos qaytadan urinib ko'ring");
+    });
+  return response.data;
+};

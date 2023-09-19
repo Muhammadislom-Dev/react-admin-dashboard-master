@@ -18,6 +18,7 @@ import CheckboxData from "./Checkbox";
 import axios from "axios";
 import { useEffect } from "react";
 import TelegramChanel from "./Chanel";
+import TopProduct from "./TopProduct";
 
 const style = {
   position: "absolute",
@@ -42,6 +43,7 @@ function ProductModal({ data }) {
       .then((res) => setProduct(res.data))
       .catch((err) => console.log(err));
   }, [data]);
+
 
   return (
     <div>

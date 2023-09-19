@@ -36,6 +36,7 @@ import Telegram from "./Telegram";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import ProductModal from "./Modal";
 import TimePicker from "./TimePicker";
+import TopProduct from "./TopProduct";
 
 const Product = () => {
   const [memberPage, setMemberPage] = useState(1);
@@ -277,6 +278,7 @@ const Product = () => {
                 <TableCell>Creat Time</TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
+                <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -298,6 +300,9 @@ const Product = () => {
                       <TableCell>
                         {" "}
                         <TimePicker date={worker.uploadedAt} />{" "}
+                      </TableCell>
+                      <TableCell>
+                        <TopProduct top={worker.top} data={worker.id} />
                       </TableCell>
                       <TableCell align="right">
                         <div
