@@ -297,12 +297,17 @@ const Product = () => {
                         />
                       ) : null}
                       <TableCell>{worker?.name?.slice(0, 25)}</TableCell>
+
                       <TableCell>
-                        {" "}
-                        <TimePicker date={worker.uploadedAt} />{" "}
+                        <TimePicker date={worker.uploadedAt} />
                       </TableCell>
                       <TableCell>
-                        <TopProduct top={worker.top} data={worker.id} />
+                        {" "}
+                        {accepted === "ACCEPTED" ? (
+                          <TopProduct top={worker.top} data={worker.id} />
+                        ) : (
+                          ""
+                        )}
                       </TableCell>
                       <TableCell align="right">
                         <div
