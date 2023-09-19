@@ -19,10 +19,6 @@ export default function CreateModal({ refetch, category }) {
   const [formData, setFormData] = React.useState({
     nameRu: "",
     nameUz: "",
-    icon: null,
-    parentCategory: category,
-    iconInSelect: null,
-    photoId: null,
   });
   const handleClickOpen = () => {
     setOpen(true);
@@ -58,7 +54,13 @@ export default function CreateModal({ refetch, category }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    postCategoryMutate({ ...formData });
+    postCategoryMutate({
+      ...formData,
+      parentCategory: category,
+      icon: null,
+      iconInSelect: null,
+      photoId: null,
+    });
   };
 
   return (
