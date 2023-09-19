@@ -265,9 +265,16 @@ export const getEmailData = async () => {
   return response.data;
 };
 
-export const getProductData = async (accepted, category, district, region) => {
+export const getProductData = async (
+  accepted,
+  category,
+  district,
+  value,
+  region,
+  valueOne
+) => {
   const response = await axios.get(
-    `${API_BASE_URL}/product/v1?productStatus=${accepted}&category=${category}&district=${district}&page=0&region=${region}&size=1000`,
+    `${API_BASE_URL}/product/v1?productStatus=${accepted}&category=${category}&district=${district}&from=${value}&page=0&region=${region}&size=1000&to=${valueOne}`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,

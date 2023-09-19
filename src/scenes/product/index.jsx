@@ -43,14 +43,27 @@ const Product = () => {
   const [accepted, setAccepted] = useState("");
   const [district, setDistrict] = useState("");
   const [region, setRegion] = useState("");
+  const [value, setValue] = useState("2023-09-01");
+  const [valueOne, setValueOne] = useState(
+    new Date().toISOString().slice(0, 10)
+  );
+
   const [category, setCategory] = useState("");
   const {
     data: product,
     refetch,
     isLoading,
   } = useQuery(
-    ["paramsProductData", accepted, category, district, region],
-    () => getProductData(accepted, category, district, region)
+    [
+      "paramsProductData",
+      accepted,
+      category,
+      district,
+      value,
+      region,
+      valueOne,
+    ],
+    () => getProductData(accepted, category, district, value, region, valueOne)
   );
   const { data: regionData } = useQuery("exampleData", fetchRegionData);
 
@@ -83,6 +96,8 @@ const Product = () => {
     );
   }, [memberPage, product?.content]);
 
+  console.log(memberTableData);
+
   if (isLoading) {
     return (
       <Box
@@ -101,7 +116,7 @@ const Product = () => {
   return (
     <Box m="20px">
       <Header title="Mahsulotlar" />
-      <Box sx={{ display: "flex", alignItems: "center", gap: "50px" }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: "25px" }}>
         <div
           style={{
             display: "flex",
@@ -184,6 +199,36 @@ const Product = () => {
             </Select>
           </FormControl>
         </div>
+        <Box sx={{ display: "flex", alignItems: "center", gap: "15px" }}>
+          <label htmlFor="">
+            Start Date
+            <input
+              type="date"
+              onChange={(e) => setValue(e.target.value)}
+              value={value}
+              style={{
+                padding: "10px 18px",
+                border: "1px solid #fff",
+                borderRadius: "5px",
+                cursor: "pointer",
+              }}
+            />
+          </label>
+          <label htmlFor="">
+            Finish Date
+            <input
+              type="date"
+              onChange={(e) => setValueOne(e.target.value)}
+              value={valueOne}
+              style={{
+                padding: "10px 18px",
+                border: "1px solid #fff",
+                borderRadius: "5px",
+                cursor: "pointer",
+              }}
+            />
+          </label>
+        </Box>
       </Box>
       <Box
         m="40px 0 0 0"
@@ -232,7 +277,6 @@ const Product = () => {
                 </TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
-                {/* <TableCell></TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>

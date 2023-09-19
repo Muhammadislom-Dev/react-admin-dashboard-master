@@ -12,22 +12,7 @@ import LineChartProduct from "../chart/product";
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [time, setTime] = useState(new Date());
 
-  useEffect(() => {
-    const intervalID = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-
-    return () => {
-      clearInterval(intervalID);
-    };
-  }, []);
-
-  const year = time.getFullYear();
-  const month = time.getMonth();
-  const day = time.getDay();
-  const conditionTime = `${year}-${month}-${day}`;
   const [value, setValue] = React.useState("2023-09-01");
   const [valueOne, setValueOne] = useState(
     new Date().toISOString().slice(0, 10)
