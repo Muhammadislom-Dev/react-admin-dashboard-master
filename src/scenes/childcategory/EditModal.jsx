@@ -19,11 +19,6 @@ export default function EditModal({ refetch, category, data }) {
   const [formData, setFormData] = React.useState({
     nameRu: "",
     nameUz: "",
-    icon: null,
-    parentCategory: category,
-    iconInSelect: null,
-    id: data,
-    photoId: null,
   });
   const handleClickOpen = () => {
     setOpen(true);
@@ -56,7 +51,14 @@ export default function EditModal({ refetch, category, data }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    postCategoryMutate({ ...formData });
+    postCategoryMutate({
+      ...formData,
+      icon: null,
+      parentCategory: category,
+      iconInSelect: null,
+      id: data,
+      photoId: null,
+    });
   };
 
   return (
@@ -95,8 +97,10 @@ export default function EditModal({ refetch, category, data }) {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button  variant="contain" color="primary" onClick={handleClose}>Cancel</Button>
-            <Button  variant="contain" color="primary" type="submit">
+            <Button variant="contain" color="primary" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button variant="contain" color="primary" type="submit">
               {isLoading ? "Yuklanmoqda..." : "Add"}
             </Button>
           </DialogActions>
