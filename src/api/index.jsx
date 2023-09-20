@@ -274,7 +274,7 @@ export const getProductData = async (
   valueOne
 ) => {
   const response = await axios.get(
-    `${API_BASE_URL}/product/v1?productStatus=${accepted}&category=${category}&district=${district}&from=${value}&page=0&region=${region}&size=1000&to=${valueOne}`,
+    `${API_BASE_URL}/product/v1?productStatus=${accepted}&category=${category}&district=${district}&from=${value}&page=0&region=${region}&size=1000&sortBy=createdAt&sortDirection=DESC&to=${valueOne}`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("tekin_market_token")}`,
